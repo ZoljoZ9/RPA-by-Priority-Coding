@@ -127,10 +127,23 @@ Partial Class ProfileScreen
             End If
         ElseIf optionsResult = DialogResult.No Then
             ' The user chose to scrape the whole website
-            ' Instead of proceeding, show a message that this feature isn't enabled yet
-            MessageBox.Show("The 'Scrape Whole Website' feature isn't enabled yet. Please email matthew@zoljan.com to enable it.", "Feature Not Available", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Dim websiteUrl As String = InputBox("Enter the website URL:")
+            Dim searchTerm As String = InputBox("Enter the search term:")
+
+            If Not String.IsNullOrWhiteSpace(websiteUrl) AndAlso Not String.IsNullOrWhiteSpace(searchTerm) Then
+                ' Prepend "http://" if the URL doesn't start with "http://" or "https://"
+                If Not websiteUrl.StartsWith("http://") AndAlso Not websiteUrl.StartsWith("https://") Then
+                    websiteUrl = "http://" & websiteUrl
+                End If
+
+                ' Call the method to scrape the whole website with the provided URL and search term
+                ScrapeWholeWebsite(websiteUrl, searchTerm)
+            Else
+                MessageBox.Show("Please enter valid inputs.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         End If
     End Sub
+
 
     ' Method to scrape a single webpage
     Private Sub ScrapeSingleWebpage(websiteUrl As String, searchTerm As String)
@@ -179,6 +192,79 @@ Partial Class ProfileScreen
         End If
     End Sub
 
+    ' Method to scrape a webpage and its subpages
+    Private Sub ScrapeWholeWebsite(websiteUrl As String, searchTerm As String)
+        Try
+            Dim web As New HtmlWeb()
+            Dim doc As HtmlAgilityPack.HtmlDocument = web.Load(websiteUrl)
+
+            ' Create a HashSet to store visited URLs
+            Dim visitedUrls As New HashSet(Of String)()
+
+            ' Scrape the main webpage for relevant information
+            ScrapePage(doc, websiteUrl, searchTerm)
+
+            ' Add the main webpage URL to the visited URLs set
+            visitedUrls.Add(websiteUrl)
+
+            ' Recursively scrape subpages
+            ScrapeSubpages(doc, websiteUrl, searchTerm, visitedUrls)
+
+            ' Save the collected data to Excel
+            SaveToExcel() ' Add this line to save data after scraping the whole website
+        Catch ex As Exception
+            ' Handle exceptions
+            MessageBox.Show("An error occurred while scraping the website: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
+
+    ' Method to scrape subpages of a website while avoiding duplicate scraping
+    Private Sub ScrapeSubpages(parentDoc As HtmlAgilityPack.HtmlDocument, baseUrl As String, searchTerm As String, visitedUrls As HashSet(Of String))
+        ' Extract all anchor elements (links) from the parent document
+        Dim anchorNodes As HtmlNodeCollection = parentDoc.DocumentNode.SelectNodes("//a[@href]")
+
+        If anchorNodes IsNot Nothing Then
+            For Each anchorNode As HtmlNode In anchorNodes
+                ' Get the value of the "href" attribute to obtain the URL of the subpage
+                Dim subpageUrl As String = anchorNode.GetAttributeValue("href", String.Empty)
+
+                ' Construct the absolute URL if the URL is relative
+                If Not subpageUrl.StartsWith("http://") AndAlso Not subpageUrl.StartsWith("https://") Then
+                    Dim absoluteUrl As String = New Uri(New Uri(baseUrl), subpageUrl).AbsoluteUri
+                    ' Check if the absolute URL belongs to the same domain
+                    If IsSameDomain(baseUrl, absoluteUrl) Then
+                        ' Check if the URL has already been visited
+                        If Not visitedUrls.Contains(absoluteUrl) Then
+                            ' Scrape the subpage
+                            Dim web As New HtmlWeb()
+                            Dim subpageDoc As HtmlAgilityPack.HtmlDocument = web.Load(absoluteUrl)
+                            ScrapePage(subpageDoc, absoluteUrl, searchTerm)
+
+                            ' Add the URL to the visited URLs set
+                            visitedUrls.Add(absoluteUrl)
+
+                            ' Recursively scrape subpages of the subpage
+                            ScrapeSubpages(subpageDoc, baseUrl, searchTerm, visitedUrls)
+                        End If
+                    End If
+                End If
+            Next
+        End If
+    End Sub
+
+
+
+    ' Method to check if a URL belongs to the same domain as the main website
+    Private Function IsSameDomain(baseUrl As String, url As String) As Boolean
+        Dim baseUri As New Uri(baseUrl)
+        Dim uri As New Uri(url)
+        Return baseUri.Host = uri.Host
+    End Function
+
+
+
     ' Method to check if a node is within <style> or <script> tags
     Private Function IsWithinStyleOrScript(node As HtmlNode) As Boolean
         Dim parent = node.ParentNode
@@ -226,34 +312,41 @@ Partial Class ProfileScreen
     ' Method to save collected data to Excel, handling both web and file search results
     Private Sub SaveToExcel()
         Try
-            Using package As New ExcelPackage()
-                Dim worksheet = package.Workbook.Worksheets.Add("Results")
-                worksheet.Cells("A1").Value = "Source"
-                worksheet.Cells("B1").Value = "Content Where Search Term Found"
+            If scrapedData.Count > 0 Then
+                MessageBox.Show("SaveToExcel function is being executed...")
 
-                Dim row = 2
-                For Each item In scrapedData
-                    worksheet.Cells($"A{row}").Value = item.Source
-                    worksheet.Cells($"B{row}").Value = item.Content
-                    row += 1
-                Next
+                Using package As New ExcelPackage()
+                    Dim worksheet = package.Workbook.Worksheets.Add("Results")
+                    worksheet.Cells("A1").Value = "Source"
+                    worksheet.Cells("B1").Value = "Content Where Search Term Found"
 
-                ' Let user choose where to save the Excel file
-                Dim saveDialog As New SaveFileDialog()
-                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx"
-                saveDialog.Title = "Save the Results"
-                saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                    Dim row = 2
+                    For Each item In scrapedData
+                        worksheet.Cells($"A{row}").Value = item.Source
+                        worksheet.Cells($"B{row}").Value = item.Content
+                        row += 1
+                    Next
 
-                If saveDialog.ShowDialog() = DialogResult.OK Then
-                    Dim fileInfo As New FileInfo(saveDialog.FileName)
-                    package.SaveAs(fileInfo)
-                    MessageBox.Show($"Results saved to {fileInfo.FullName}")
-                End If
-            End Using
+                    ' Let user choose where to save the Excel file
+                    Dim saveDialog As New SaveFileDialog()
+                    saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx"
+                    saveDialog.Title = "Save the Results"
+                    saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+
+                    If saveDialog.ShowDialog() = DialogResult.OK Then
+                        Dim fileInfo As New FileInfo(saveDialog.FileName)
+                        package.SaveAs(fileInfo)
+                        MessageBox.Show($"Results saved to {fileInfo.FullName}")
+                    End If
+                End Using
+            Else
+                MessageBox.Show("No data to save to Excel.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
         Catch ex As Exception
-            MessageBox.Show("Error saving to Excel: " & ex.Message)
+            MessageBox.Show("Error saving to Excel: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
 
 
 
