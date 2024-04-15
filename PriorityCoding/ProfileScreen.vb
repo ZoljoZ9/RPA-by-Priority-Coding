@@ -219,7 +219,6 @@ Partial Class ProfileScreen
     End Sub
 
 
-
     ' Method to scrape subpages of a website while avoiding duplicate scraping
     Private Sub ScrapeSubpages(parentDoc As HtmlAgilityPack.HtmlDocument, baseUrl As String, searchTerm As String, visitedUrls As HashSet(Of String))
         ' Extract all anchor elements (links) from the parent document
@@ -232,27 +231,30 @@ Partial Class ProfileScreen
 
                 ' Construct the absolute URL if the URL is relative
                 If Not subpageUrl.StartsWith("http://") AndAlso Not subpageUrl.StartsWith("https://") Then
-                    Dim absoluteUrl As String = New Uri(New Uri(baseUrl), subpageUrl).AbsoluteUri
-                    ' Check if the absolute URL belongs to the same domain
-                    If IsSameDomain(baseUrl, absoluteUrl) Then
-                        ' Check if the URL has already been visited
-                        If Not visitedUrls.Contains(absoluteUrl) Then
-                            ' Scrape the subpage
-                            Dim web As New HtmlWeb()
-                            Dim subpageDoc As HtmlAgilityPack.HtmlDocument = web.Load(absoluteUrl)
-                            ScrapePage(subpageDoc, absoluteUrl, searchTerm)
+                    subpageUrl = New Uri(New Uri(baseUrl), subpageUrl).AbsoluteUri
+                End If
 
-                            ' Add the URL to the visited URLs set
-                            visitedUrls.Add(absoluteUrl)
+                ' Check if the absolute URL belongs to the same domain and has not been visited
+                If IsSameDomain(baseUrl, subpageUrl) AndAlso Not visitedUrls.Contains(subpageUrl) Then
+                    ' Mark the URL as visited
+                    visitedUrls.Add(subpageUrl)
 
-                            ' Recursively scrape subpages of the subpage
-                            ScrapeSubpages(subpageDoc, baseUrl, searchTerm, visitedUrls)
-                        End If
-                    End If
+                    ' Load the subpage
+                    Dim web As New HtmlWeb()
+                    Dim subpageDoc As HtmlAgilityPack.HtmlDocument = web.Load(subpageUrl)
+
+                    ' Scrape the subpage for relevant information
+                    ScrapePage(subpageDoc, subpageUrl, searchTerm)
+
+                    ' Recursively scrape subpages of the subpage
+                    ScrapeSubpages(subpageDoc, baseUrl, searchTerm, visitedUrls)
                 End If
             Next
         End If
     End Sub
+
+
+
 
 
 
@@ -283,9 +285,13 @@ Partial Class ProfileScreen
         Dim sentence As New StringBuilder()
 
         ' Traverse upwards in the DOM tree to find the parent element containing the sentence
-        While node IsNot Nothing AndAlso node.NodeType = HtmlNodeType.Text
+        While node IsNot Nothing AndAlso (node.NodeType = HtmlNodeType.Text OrElse node.Name = "span")
             ' Append the text of the current node to the sentence builder
-            sentence.Insert(0, node.InnerText.Trim())
+            If node.NodeType = HtmlNodeType.Text Then
+                sentence.Insert(0, node.InnerText.Trim())
+            ElseIf node.Name = "span" Then
+                sentence.Insert(0, node.InnerText.Trim() & " ")
+            End If
 
             ' Move to the previous sibling node
             node = node.PreviousSibling
@@ -294,6 +300,7 @@ Partial Class ProfileScreen
         ' Remove any HTML tags from the sentence
         Return System.Text.RegularExpressions.Regex.Replace(sentence.ToString(), "<[^>]*(>|$)", String.Empty)
     End Function
+
 
 
 
@@ -507,14 +514,22 @@ Partial Class ProfileScreen
             Me.Text = "Scrape File Options"
             Me.FormBorderStyle = FormBorderStyle.FixedDialog
             Me.StartPosition = FormStartPosition.CenterScreen
-            Me.Size = New Size(320, 190)
-            Me.MaximizeBox = False
+            Me.Size = New Size(400, 190) ' Increase the width of the form
 
             ' Set control locations
             btnOk.Location = New Point(50, 110)
             btnCancel.Location = New Point(150, 110)
             radSingleFile.Location = New Point(20, 20)
             radEntireFolder.Location = New Point(20, 50)
+
+            ' Set control sizes
+            radSingleFile.Size = New Size(200, 20) ' Adjust width as needed
+            radEntireFolder.Size = New Size(200, 20) ' Adjust width as needed
+
+            ' Set font size for radio buttons
+            radSingleFile.Font = New Font(radSingleFile.Font.FontFamily, 10) ' Adjust font size as needed
+            radEntireFolder.Font = New Font(radEntireFolder.Font.FontFamily, 10) ' Adjust font size as needed
+
 
             ' Add controls to form
             Me.Controls.Add(btnOk)
