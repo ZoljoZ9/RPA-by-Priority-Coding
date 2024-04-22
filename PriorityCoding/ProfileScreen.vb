@@ -9,8 +9,6 @@ Imports UglyToad.PdfPig.Content
 Imports System.Windows.Forms
 Imports System.ComponentModel
 
-
-
 Partial Class ProfileScreen
     Inherits System.Windows.Forms.Form
 
@@ -32,12 +30,12 @@ Partial Class ProfileScreen
 
         ' Initialize the Dude button
         Dude = New Button With {
-        .Text = "Dude",
-        .Size = New Size(150, 50),
-        .Location = New Point(10, 10),
-        .BackColor = ColorTranslator.FromHtml("#333333"), ' Set the button color to #001f0f
-        .ForeColor = Color.White ' Set the text color to white
-    }
+            .Text = "Dude",
+            .Size = New Size(150, 50),
+            .Location = New Point(10, 10),
+            .BackColor = ColorTranslator.FromHtml("#333333"), ' Set the button color to #001f0f
+            .ForeColor = Color.White ' Set the text color to white
+        }
 
         ' Add Dude button to Panel1 (sidebar)
         Me.SplitContainer1.Panel1.Controls.Add(Dude)
@@ -45,50 +43,49 @@ Partial Class ProfileScreen
         ' After initializing the Dude button
         Dude.Location = New Point((SplitContainer1.Panel1.Width - Dude.Width) / 2, Dude.Location.Y)
 
+        ' Initialize scrapeFileButton and scrapeWebsiteButton
+        scrapeFileButton = New Button()
+        scrapeWebsiteButton = New Button()
 
+        ' Initialize scrapeFileButton
+        InitializeScrapeFileButton()
+
+        ' Initialize scrapeWebsiteButton
+        InitializeScrapeWebsiteButton()
+
+        ' Set the buttons to be initially invisible
+        scrapeFileButton.Visible = False
+        scrapeWebsiteButton.Visible = False
     End Sub
 
-    ' Event handler for the general scrape information button click event
-    Private Sub Dude_Click(sender As Object, e As EventArgs) Handles Dude.Click
-        ' Call the ScrapeInfoButton_Click method
-        ScrapeInfoButton_Click(sender, e)
-    End Sub
 
-    ' Event handler for the general scrape information button click event
-    Private Sub ScrapeInfoButton_Click(sender As Object, e As EventArgs)
-        ' Initialize the introduction label
-        Dim introductionLabel As New Label With {
-        .Text = "Welcome to the Scrape Information tool. In this tool, you will be able to scrape important information that is needed to save manual, repetitive, and monotonous. Please choose an option below, to either scrape information from a website or a file saved to your computer:",
-        .ForeColor = Color.White,
-        .Location = New Point(10, 10),
-        .Size = New Size(Me.SplitContainer1.Panel2.Width - 20, 60),
-        .AutoSize = False
-    }
-        ' Modify the introduction label initialization
-        introductionLabel.AutoSize = True
-        introductionLabel.MaximumSize = New Size(Me.SplitContainer1.Panel2.Width - 20, 0) ' Allow the label to grow in height
 
-        ' Initialize the scrape website button
-        scrapeWebsiteButton = New Button With {
-        .Text = "Scrape Website",
-        .Size = New Size(150, 50),
-        .Location = New Point(10, introductionLabel.Bottom + 60),
-        .BackColor = ColorTranslator.FromHtml("#333333"),
-        .ForeColor = Color.White
-    }
-
-        ' Initialize the scrape file button
-        scrapeFileButton = New Button With {
-        .Text = "Scrape File",
-        .Size = New Size(150, 50),
-        .Location = New Point(10, scrapeWebsiteButton.Bottom + 25),
-        .BackColor = ColorTranslator.FromHtml("#333333"),
-        .ForeColor = Color.White
-    }
-
-        ' Add event handlers for the new buttons
-        AddHandler scrapeWebsiteButton.Click, AddressOf ScrapeWebsiteButton_Click
+    ' Method to initialize the scrape file button
+    Private Sub InitializeScrapeFileButton()
+        scrapeFileButton.Text = "Scrape File" ' Set the button text
+        scrapeFileButton.Size = New Size(150, 50) ' Set the button size
+        scrapeFileButton.Location = New Point(10, 80) ' Set the button location
+        scrapeFileButton.BackColor = ColorTranslator.FromHtml("#333333") ' Set the background color
+        scrapeFileButton.ForeColor = Color.White ' Set the text color
         AddHandler scrapeFileButton.Click, AddressOf ScrapeFileButton_Click
+        Me.SplitContainer1.Panel2.Controls.Add(scrapeFileButton)
+    End Sub
+
+    ' Method to initialize the scrape website button
+    Private Sub InitializeScrapeWebsiteButton()
+        scrapeWebsiteButton.Text = "Scrape Website" ' Set the button text
+        scrapeWebsiteButton.Size = New Size(150, 50) ' Set the button size
+        scrapeWebsiteButton.Location = New Point(10, 140) ' Set the button location
+        scrapeWebsiteButton.BackColor = ColorTranslator.FromHtml("#333333") ' Set the background color
+        scrapeWebsiteButton.ForeColor = Color.White ' Set the text color
+        AddHandler scrapeWebsiteButton.Click, AddressOf ScrapeWebsiteButton_Click
+        Me.SplitContainer1.Panel2.Controls.Add(scrapeWebsiteButton)
+    End Sub
+
+    ' Event handler for the general scrape information button click event
+    Private Sub PerformClickScrapeInfoButton()
+        ' Initialize the introduction label
+        InitializeIntroductionLabel()
 
         ' Add the controls to the panel
         Me.SplitContainer1.Panel2.Controls.Clear()
@@ -100,6 +97,53 @@ Partial Class ProfileScreen
         scrapeWebsiteButton.Visible = True
         scrapeFileButton.Visible = True
     End Sub
+
+    ' Method to initialize the introduction label
+    Private Sub InitializeIntroductionLabel()
+        introductionLabel = New Label With {
+            .Text = "Welcome to the Scrape Information tool. In this tool, you will be able to scrape important information that is needed to save manual, repetitive, and monotonous tasks. Please choose an option below, to either scrape information from a website or a file saved to your computer:",
+            .ForeColor = Color.White,
+            .Location = New Point(10, 10),
+            .AutoSize = True
+        }
+        introductionLabel.MaximumSize = New Size(Me.SplitContainer1.Panel2.Width - 20, 0) ' Allow the label to grow in height
+    End Sub
+
+
+
+
+    ' Event handler for the Dude button click event
+    Private Sub Dude_Click(sender As Object, e As EventArgs) Handles Dude.Click
+        ' Call the PerformClickScrapeInfoButton method instead of directly invoking ScrapeInfoButton_Click
+        PerformClickScrapeInfoButton()
+    End Sub
+
+
+    ' Event handler for the general scrape information button click event
+    Private Sub ScrapeInfoButton_Click(sender As Object, e As EventArgs)
+        ' Initialize the introduction label
+        Dim introductionLabel As New Label With {
+        .Text = "Welcome to the Scrape Information tool. In this tool, you will be able to scrape important information that is needed to save manual, repetitive, and monotonous tasks. Please choose an option below, to either scrape information from a website or a file saved to your computer:",
+        .ForeColor = Color.White,
+        .Location = New Point(10, 10),
+        .Size = New Size(Me.SplitContainer1.Panel2.Width - 20, 60),
+        .AutoSize = False
+    }
+        ' Modify the introduction label initialization
+        introductionLabel.AutoSize = True
+        introductionLabel.MaximumSize = New Size(Me.SplitContainer1.Panel2.Width - 20, 0) ' Allow the label to grow in height
+
+        ' Add the controls to the panel
+        Me.SplitContainer1.Panel2.Controls.Clear()
+        Me.SplitContainer1.Panel2.Controls.Add(introductionLabel)
+        Me.SplitContainer1.Panel2.Controls.Add(scrapeWebsiteButton)
+        Me.SplitContainer1.Panel2.Controls.Add(scrapeFileButton)
+
+        ' Set the buttons to be visible
+        scrapeWebsiteButton.Visible = True
+        scrapeFileButton.Visible = True
+    End Sub
+
 
     ' Other methods and event handlers
 
@@ -337,6 +381,8 @@ Partial Class ProfileScreen
     End Sub
 
 
+
+
     ' Event handler for the scrape file button click event
     Private Sub ScrapeFileButton_Click(sender As Object, e As EventArgs) Handles scrapeFileButton.Click
         Dim optionsDialog As New ScrapeFileOptionsDialog()
@@ -540,6 +586,16 @@ Partial Class ProfileScreen
             ' Add event handlers
             AddHandler btnOk.Click, AddressOf btnOk_Click
             AddHandler btnCancel.Click, AddressOf btnCancel_Click
+            AddHandler Me.FormClosing, AddressOf ScrapeFileOptionsDialog_FormClosing
+
+        End Sub
+
+        Private Sub ScrapeFileOptionsDialog_FormClosing(sender As Object, e As FormClosingEventArgs)
+            ' Check if the form is being closed without OK button being clicked
+            If e.CloseReason = CloseReason.UserClosing Then
+                ' Handle the event here, e.g., setting DialogResult to Cancel
+                Me.DialogResult = DialogResult.Cancel
+            End If
         End Sub
 
         ' Event handlers for buttons
