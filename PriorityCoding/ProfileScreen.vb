@@ -14,8 +14,6 @@ Imports System.ComponentModel
 Partial Class ProfileScreen
     Inherits System.Windows.Forms.Form
 
-
-
     ' Designer-generated variables
     Private components As System.ComponentModel.IContainer
     Private WithEvents Dude As Button
@@ -103,8 +101,6 @@ Partial Class ProfileScreen
         scrapeFileButton.Visible = True
     End Sub
 
-
-
     ' Other methods and event handlers
 
     ' Event handler for the scrape website button click event
@@ -144,7 +140,6 @@ Partial Class ProfileScreen
         End If
     End Sub
 
-
     ' Method to scrape a single webpage
     Private Sub ScrapeSingleWebpage(websiteUrl As String, searchTerm As String)
         Try
@@ -170,8 +165,6 @@ Partial Class ProfileScreen
             MessageBox.Show("An unexpected error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
-
 
     ' Method to scrape a page for the search term along with the corresponding sentence
     Private Sub ScrapePage(doc As HtmlAgilityPack.HtmlDocument, url As String, searchTerm As String)
@@ -218,7 +211,6 @@ Partial Class ProfileScreen
         End Try
     End Sub
 
-
     ' Method to scrape subpages of a website while avoiding duplicate scraping
     Private Sub ScrapeSubpages(parentDoc As HtmlAgilityPack.HtmlDocument, baseUrl As String, searchTerm As String, visitedUrls As HashSet(Of String))
         ' Extract all anchor elements (links) from the parent document
@@ -253,19 +245,12 @@ Partial Class ProfileScreen
         End If
     End Sub
 
-
-
-
-
-
     ' Method to check if a URL belongs to the same domain as the main website
     Private Function IsSameDomain(baseUrl As String, url As String) As Boolean
         Dim baseUri As New Uri(baseUrl)
         Dim uri As New Uri(url)
         Return baseUri.Host = uri.Host
     End Function
-
-
 
     ' Method to check if a node is within <style> or <script> tags
     Private Function IsWithinStyleOrScript(node As HtmlNode) As Boolean
@@ -278,7 +263,6 @@ Partial Class ProfileScreen
         End While
         Return False
     End Function
-
 
     ' Method to get the sentence containing the specified text node without HTML tags
     Private Function GetSentence(node As HtmlNode) As String
@@ -301,10 +285,6 @@ Partial Class ProfileScreen
         Return System.Text.RegularExpressions.Regex.Replace(sentence.ToString(), "<[^>]*(>|$)", String.Empty)
     End Function
 
-
-
-
-
     Public Class SearchResult
         Public Property Source As String
         Public Property Content As String ' Sentence or paragraph containing the search term
@@ -314,7 +294,6 @@ Partial Class ProfileScreen
             Me.Content = content
         End Sub
     End Class
-
 
     ' Method to save collected data to Excel, handling both web and file search results
     Private Sub SaveToExcel()
@@ -351,10 +330,11 @@ Partial Class ProfileScreen
             End If
         Catch ex As Exception
             MessageBox.Show("Error saving to Excel: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            ' Clear the scrapedData list after saving data to Excel
+            scrapedData.Clear()
         End Try
     End Sub
-
-
 
 
     ' Event handler for the scrape file button click event
@@ -427,25 +407,31 @@ Partial Class ProfileScreen
         End If
     End Sub
 
-
     ' Method to process a Word document with search functionality
-    Private Function ProcessWordDocument(filePath As String, searchTerm As String) As Boolean
-        Dim textBuilder As New StringBuilder()
+    Private Sub ProcessWordDocument(filePath As String, searchTerm As String)
         Dim searchTermFound As Boolean = False
         Using doc As WordprocessingDocument = WordprocessingDocument.Open(filePath, False)
             Dim bodyText = doc.MainDocumentPart.Document.Body.InnerText
-            If bodyText.ToLower().Contains(searchTerm.ToLower()) Then
-                searchTermFound = True
-            End If
+            Dim lowerSearchTerm = searchTerm.ToLower()
+
+            ' Split the body text into sentences
+            Dim sentences() As String = bodyText.Split(New String() {". "}, StringSplitOptions.RemoveEmptyEntries)
+
+            ' Iterate through each sentence
+            For Each sentence As String In sentences
+                If sentence.ToLower().Contains(lowerSearchTerm) Then
+                    ' Add the sentence to scraped data
+                    scrapedData.Add(New SearchResult(filePath, sentence))
+                    searchTermFound = True
+                End If
+            Next
         End Using
 
-        If searchTermFound Then
-            scrapedData.Add(New SearchResult(filePath, "Term found sentence or paragraph"))
+        If Not searchTermFound Then
+            ' If the search term is not found in any sentence, still add an entry indicating it was not found
+            scrapedData.Add(New SearchResult(filePath, "Search term not found"))
         End If
-
-        Return searchTermFound
-    End Function
-
+    End Sub
 
 
     ' Method to process an HTML file and search for a specific term
@@ -453,29 +439,43 @@ Partial Class ProfileScreen
         Dim doc = New HtmlAgilityPack.HtmlDocument()
         doc.Load(filePath)
 
-        Dim searchTermFound As Boolean = False
+        Dim lowerSearchTerm = searchTerm.ToLower()
+        Dim paragraph As New StringBuilder()
+
         For Each node As HtmlNode In doc.DocumentNode.SelectNodes("//body//text()")
-            If node.InnerText.ToLower().Contains(searchTerm.ToLower()) Then
-                ' Assuming we want the entire paragraph where the search term was found:
-                Dim paragraph = node.ParentNode.InnerText
-                scrapedData.Add(New SearchResult(filePath, paragraph))
+            ' Check if the node contains the search term
+            If node.InnerText.ToLower().Contains(lowerSearchTerm) Then
+                ' Traverse upwards in the DOM tree to find the parent element containing the entire paragraph
+                Dim currentNode As HtmlNode = node
+                While currentNode IsNot Nothing AndAlso currentNode.Name <> "body"
+                    paragraph.Insert(0, currentNode.InnerText.Trim() & " ")
+                    currentNode = currentNode.ParentNode
+                End While
+
+                ' Remove any HTML tags from the paragraph
+                Dim cleanParagraph = System.Text.RegularExpressions.Regex.Replace(paragraph.ToString(), "<[^>]*(>|$)", String.Empty)
+                scrapedData.Add(New SearchResult(filePath, cleanParagraph))
                 Exit For ' Exit if the search term is found
             End If
         Next
     End Sub
 
-
-
     ' Method to process a PDF file and search for a specific term using PdfPig
     Private Sub ProcessPdfFile(filePath As String, searchTerm As String)
         Using pdf = PdfDocument.Open(filePath)
             For Each page As Page In pdf.GetPages()
-                If page.Text.ToLower().Contains(searchTerm.ToLower()) Then
-                    ' For simplicity, add the first occurrence. You might want to adjust this.
-                    Dim text = page.Text
-                    scrapedData.Add(New SearchResult(filePath, text))
-                    Exit For ' Exit if the search term is found
-                End If
+                Dim text As String = page.Text
+                Dim lowerSearchTerm As String = searchTerm.ToLower()
+
+                ' Split the text into sentences
+                Dim sentences() As String = text.Split(New String() {". "}, StringSplitOptions.RemoveEmptyEntries)
+
+                For Each sentence As String In sentences
+                    If sentence.ToLower().Contains(lowerSearchTerm) Then
+                        ' Add the sentence to scraped data
+                        scrapedData.Add(New SearchResult(filePath, sentence))
+                    End If
+                Next
             Next
         End Using
     End Sub
@@ -559,9 +559,6 @@ Partial Class ProfileScreen
             Me.Close()
         End Sub
     End Class
-
-
-
 
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ProfileScreen))
