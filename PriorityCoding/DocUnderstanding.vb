@@ -9,143 +9,31 @@ Imports UglyToad.PdfPig.Content
 Imports System.Windows.Forms
 Imports System.ComponentModel
 
-Partial Class ProfileScreen
-    Inherits System.Windows.Forms.Form
+Public Class DocUnderstanding
 
-    ' Designer-generated variables
-    Private components As System.ComponentModel.IContainer
-    Private WithEvents Dude As Button
     Private scrapedData As New List(Of SearchResult) ' This goes at the top of your form class
-    Private WithEvents scrapeWebsiteButton As Button
-    Private WithEvents scrapeFileButton As Button
-    Friend WithEvents SplitContainer1 As SplitContainer
-    Private WithEvents introductionLabel As Label
 
     ' Constructor
     Public Sub New()
         InitializeComponent()
+        InitializeEventHandlers() ' Call the method to initialize event handlers
+        scrapeFileButton.Visible = True
+        scrapeWebsiteButton.Visible = True
+        ' Add event handler subscriptions for buttons
+        AddHandler scrapeFileButton.Click, AddressOf ScrapeFileButton_Click
+        AddHandler scrapeWebsiteButton.Click, AddressOf ScrapeWebsiteButton_Click
+    End Sub
 
+
+
+
+    ' Method to initialize event handlers
+    Private Sub InitializeEventHandlers()
         ' Set the license context for EPPlus
         ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial
-
-        ' Initialize the Dude button
-        Dude = New Button With {
-            .Text = "Dude",
-            .Size = New Size(150, 50),
-            .Location = New Point(10, 10),
-            .BackColor = ColorTranslator.FromHtml("#333333"), ' Set the button color to #001f0f
-            .ForeColor = Color.White ' Set the text color to white
-        }
-
-        ' Add Dude button to Panel1 (sidebar)
-        Me.SplitContainer1.Panel1.Controls.Add(Dude)
-
-        ' After initializing the Dude button
-        Dude.Location = New Point((SplitContainer1.Panel1.Width - Dude.Width) / 2, Dude.Location.Y)
-
-        ' Initialize scrapeFileButton and scrapeWebsiteButton
-        scrapeFileButton = New Button()
-        scrapeWebsiteButton = New Button()
-
-        ' Initialize scrapeFileButton
-        InitializeScrapeFileButton()
-
-        ' Initialize scrapeWebsiteButton
-        InitializeScrapeWebsiteButton()
-
-        ' Set the buttons to be initially invisible
-        scrapeFileButton.Visible = False
-        scrapeWebsiteButton.Visible = False
     End Sub
 
 
-
-    ' Method to initialize the scrape file button
-    Private Sub InitializeScrapeFileButton()
-        scrapeFileButton.Text = "Scrape File" ' Set the button text
-        scrapeFileButton.Size = New Size(150, 50) ' Set the button size
-        scrapeFileButton.Location = New Point(10, 80) ' Set the button location
-        scrapeFileButton.BackColor = ColorTranslator.FromHtml("#333333") ' Set the background color
-        scrapeFileButton.ForeColor = Color.White ' Set the text color
-        AddHandler scrapeFileButton.Click, AddressOf ScrapeFileButton_Click
-        Me.SplitContainer1.Panel2.Controls.Add(scrapeFileButton)
-    End Sub
-
-    ' Method to initialize the scrape website button
-    Private Sub InitializeScrapeWebsiteButton()
-        scrapeWebsiteButton.Text = "Scrape Website" ' Set the button text
-        scrapeWebsiteButton.Size = New Size(150, 50) ' Set the button size
-        scrapeWebsiteButton.Location = New Point(10, 140) ' Set the button location
-        scrapeWebsiteButton.BackColor = ColorTranslator.FromHtml("#333333") ' Set the background color
-        scrapeWebsiteButton.ForeColor = Color.White ' Set the text color
-        AddHandler scrapeWebsiteButton.Click, AddressOf ScrapeWebsiteButton_Click
-        Me.SplitContainer1.Panel2.Controls.Add(scrapeWebsiteButton)
-    End Sub
-
-    ' Event handler for the general scrape information button click event
-    Private Sub PerformClickScrapeInfoButton()
-        ' Initialize the introduction label
-        InitializeIntroductionLabel()
-
-        ' Add the controls to the panel
-        Me.SplitContainer1.Panel2.Controls.Clear()
-        Me.SplitContainer1.Panel2.Controls.Add(introductionLabel)
-        Me.SplitContainer1.Panel2.Controls.Add(scrapeWebsiteButton)
-        Me.SplitContainer1.Panel2.Controls.Add(scrapeFileButton)
-
-        ' Set the buttons to be visible
-        scrapeWebsiteButton.Visible = True
-        scrapeFileButton.Visible = True
-    End Sub
-
-    ' Method to initialize the introduction label
-    Private Sub InitializeIntroductionLabel()
-        introductionLabel = New Label With {
-            .Text = "Welcome to the Scrape Information tool. In this tool, you will be able to scrape important information that is needed to save manual, repetitive, and monotonous tasks. Please choose an option below, to either scrape information from a website or a file saved to your computer:",
-            .ForeColor = Color.White,
-            .Location = New Point(10, 10),
-            .AutoSize = True
-        }
-        introductionLabel.MaximumSize = New Size(Me.SplitContainer1.Panel2.Width - 20, 0) ' Allow the label to grow in height
-    End Sub
-
-
-
-
-    ' Event handler for the Dude button click event
-    Private Sub Dude_Click(sender As Object, e As EventArgs) Handles Dude.Click
-        ' Call the PerformClickScrapeInfoButton method instead of directly invoking ScrapeInfoButton_Click
-        PerformClickScrapeInfoButton()
-    End Sub
-
-
-    ' Event handler for the general scrape information button click event
-    Private Sub ScrapeInfoButton_Click(sender As Object, e As EventArgs)
-        ' Initialize the introduction label
-        Dim introductionLabel As New Label With {
-        .Text = "Welcome to the Scrape Information tool. In this tool, you will be able to scrape important information that is needed to save manual, repetitive, and monotonous tasks. Please choose an option below, to either scrape information from a website or a file saved to your computer:",
-        .ForeColor = Color.White,
-        .Location = New Point(10, 10),
-        .Size = New Size(Me.SplitContainer1.Panel2.Width - 20, 60),
-        .AutoSize = False
-    }
-        ' Modify the introduction label initialization
-        introductionLabel.AutoSize = True
-        introductionLabel.MaximumSize = New Size(Me.SplitContainer1.Panel2.Width - 20, 0) ' Allow the label to grow in height
-
-        ' Add the controls to the panel
-        Me.SplitContainer1.Panel2.Controls.Clear()
-        Me.SplitContainer1.Panel2.Controls.Add(introductionLabel)
-        Me.SplitContainer1.Panel2.Controls.Add(scrapeWebsiteButton)
-        Me.SplitContainer1.Panel2.Controls.Add(scrapeFileButton)
-
-        ' Set the buttons to be visible
-        scrapeWebsiteButton.Visible = True
-        scrapeFileButton.Visible = True
-    End Sub
-
-
-    ' Other methods and event handlers
 
     ' Event handler for the scrape website button click event
     Private Sub ScrapeWebsiteButton_Click(sender As Object, e As EventArgs)
@@ -384,7 +272,7 @@ Partial Class ProfileScreen
 
 
     ' Event handler for the scrape file button click event
-    Private Sub ScrapeFileButton_Click(sender As Object, e As EventArgs) Handles scrapeFileButton.Click
+    Private Sub ScrapeFileButton_Click(sender As Object, e As EventArgs)
         Dim optionsDialog As New ScrapeFileOptionsDialog()
         Dim optionsResult As DialogResult = optionsDialog.ShowDialog()
 
@@ -576,19 +464,13 @@ Partial Class ProfileScreen
             radSingleFile.Font = New Font(radSingleFile.Font.FontFamily, 10) ' Adjust font size as needed
             radEntireFolder.Font = New Font(radEntireFolder.Font.FontFamily, 10) ' Adjust font size as needed
 
-
             ' Add controls to form
             Me.Controls.Add(btnOk)
             Me.Controls.Add(btnCancel)
             Me.Controls.Add(radSingleFile)
             Me.Controls.Add(radEntireFolder)
-
-            ' Add event handlers
-            AddHandler btnOk.Click, AddressOf btnOk_Click
-            AddHandler btnCancel.Click, AddressOf btnCancel_Click
-            AddHandler Me.FormClosing, AddressOf ScrapeFileOptionsDialog_FormClosing
-
         End Sub
+
 
         Private Sub ScrapeFileOptionsDialog_FormClosing(sender As Object, e As FormClosingEventArgs)
             ' Check if the form is being closed without OK button being clicked
@@ -599,7 +481,7 @@ Partial Class ProfileScreen
         End Sub
 
         ' Event handlers for buttons
-        Private Sub btnOk_Click(sender As Object, e As EventArgs)
+        Private Sub btnOk_Click(sender As Object, e As EventArgs) Handles btnOk.Click
             ' Set properties based on user selection
             ScrapeSingleFile = radSingleFile.Checked
             ScrapeEntireFolder = radEntireFolder.Checked
@@ -609,51 +491,12 @@ Partial Class ProfileScreen
             Me.Close()
         End Sub
 
-        Private Sub btnCancel_Click(sender As Object, e As EventArgs)
+        Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
             ' Close the dialog without setting properties
             Me.DialogResult = DialogResult.Cancel
             Me.Close()
         End Sub
     End Class
 
-    Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ProfileScreen))
-        SplitContainer1 = New SplitContainer()
-        CType(SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        SplitContainer1.SuspendLayout()
-        SuspendLayout()
-        ' 
-        ' SplitContainer1
-        ' 
-        SplitContainer1.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        SplitContainer1.Dock = DockStyle.Fill
-        SplitContainer1.Location = New Point(0, 0)
-        SplitContainer1.Name = "SplitContainer1"
-        ' 
-        ' SplitContainer1.Panel1
-        ' 
-        SplitContainer1.Panel1.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        ' 
-        ' SplitContainer1.Panel2
-        ' 
-        SplitContainer1.Panel2.BackColor = Color.FromArgb(CByte(51), CByte(51), CByte(51))
-        SplitContainer1.Size = New Size(800, 450)
-        SplitContainer1.SplitterDistance = 227
-        SplitContainer1.TabIndex = 0
-        ' 
-        ' ProfileScreen
-        ' 
-        ClientSize = New Size(800, 450)
-        Controls.Add(SplitContainer1)
-        Icon = CType(resources.GetObject("$this.Icon"), Icon)
-        Name = "ProfileScreen"
-        CType(SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        SplitContainer1.ResumeLayout(False)
-        ResumeLayout(False)
 
-    End Sub
-
-    Private Sub ProfileScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 End Class
