@@ -26,10 +26,10 @@ Public Class MainScreen
 
         ' Set the vertical scroll position of Panel2 to 0
         Panel2.VerticalScroll.Value = 0
+
+        ' Set the form's border style to FixedSingle to disallow resizing
+        Me.FormBorderStyle = FormBorderStyle.FixedSingle
     End Sub
-
-
-
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
 
@@ -45,13 +45,13 @@ Public Class MainScreen
 
     Private Sub InitializeDynamicControls()
         ' Define an array with button names in descending order
-        Dim buttonNames() As String = {"Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 6", "Button 5", "Button 4", "Button 3", "Button 2", "Document understanding"}
+        Dim buttonNames() As String = {"Document understanding", "Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9", "Button 10", "Button 11", "Button 12", "Button 13", "Button 14", "Button 15", "Button 16", "Button 17", "Button 18", "Button 19", "Button 20"}
 
         ' Add buttons dynamically based on the buttonNames array
         For Each buttonName As String In buttonNames
             Dim button As New System.Windows.Forms.Button() ' Fully qualify Button class
             button.Text = buttonName
-            button.Dock = DockStyle.Top
+            button.Dock = DockStyle.Bottom
             AddHandler button.Click, AddressOf OpenForm ' Add click event handler
             Panel2.Controls.Add(button)
         Next
