@@ -50,13 +50,14 @@ Partial Class SplashScreen
         ' 
         ' SplashScreen
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(51), CByte(51), CByte(51))
         ClientSize = New Size(685, 439)
         Controls.Add(Button1)
         Controls.Add(PictureBox1)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        MaximizeBox = False
         Name = "SplashScreen"
         Text = "SplashScreen"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
