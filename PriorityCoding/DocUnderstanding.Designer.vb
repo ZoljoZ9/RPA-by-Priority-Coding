@@ -23,102 +23,102 @@ Partial Class DocUnderstanding
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DocUnderstanding))
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.scrapeFileButton = New System.Windows.Forms.Button()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.scrapeWebsiteButton = New System.Windows.Forms.Button()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Panel1.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        Panel1 = New Panel()
+        scrapeFileButton = New Button()
+        PictureBox2 = New PictureBox()
+        PictureBox1 = New PictureBox()
+        scrapeWebsiteButton = New Button()
+        Label2 = New Label()
+        Label1 = New Label()
+        Panel1.SuspendLayout()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
+        SuspendLayout()
         ' 
         ' Panel1
         ' 
-        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(51, Byte), Integer))
-        Me.Panel1.Controls.Add(Me.scrapeFileButton)
-        Me.Panel1.Controls.Add(Me.PictureBox2)
-        Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Controls.Add(Me.scrapeWebsiteButton)
-        Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Location = New System.Drawing.Point(0, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(645, 454)
-        Me.Panel1.TabIndex = 2
+        Panel1.BackColor = Color.FromArgb(CByte(51), CByte(51), CByte(51))
+        Panel1.Controls.Add(scrapeFileButton)
+        Panel1.Controls.Add(PictureBox2)
+        Panel1.Controls.Add(PictureBox1)
+        Panel1.Controls.Add(scrapeWebsiteButton)
+        Panel1.Controls.Add(Label2)
+        Panel1.Controls.Add(Label1)
+        Panel1.Location = New Point(0, 0)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(645, 454)
+        Panel1.TabIndex = 2
         ' 
         ' scrapeFileButton
         ' 
-        Me.scrapeFileButton.Location = New System.Drawing.Point(376, 327)
-        Me.scrapeFileButton.Name = "scrapeFileButton"
-        Me.scrapeFileButton.Size = New System.Drawing.Size(109, 23)
-        Me.scrapeFileButton.TabIndex = 5
-        Me.scrapeFileButton.Text = "Scrape file(s)"
-        Me.scrapeFileButton.UseVisualStyleBackColor = True
+        scrapeFileButton.Location = New Point(376, 327)
+        scrapeFileButton.Name = "scrapeFileButton"
+        scrapeFileButton.Size = New Size(109, 23)
+        scrapeFileButton.TabIndex = 5
+        scrapeFileButton.Text = "Scrape file(s)"
+        scrapeFileButton.UseVisualStyleBackColor = True
         ' 
         ' PictureBox2
         ' 
-        Me.PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), System.Drawing.Image)
-        Me.PictureBox2.Location = New System.Drawing.Point(134, 186)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(116, 111)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox2.TabIndex = 4
-        Me.PictureBox2.TabStop = False
+        PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), Image)
+        PictureBox2.Location = New Point(134, 186)
+        PictureBox2.Name = "PictureBox2"
+        PictureBox2.Size = New Size(116, 111)
+        PictureBox2.SizeMode = PictureBoxSizeMode.Zoom
+        PictureBox2.TabIndex = 4
+        PictureBox2.TabStop = False
         ' 
         ' PictureBox1
         ' 
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(376, 186)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(109, 111)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 3
-        Me.PictureBox1.TabStop = False
+        PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), Image)
+        PictureBox1.Location = New Point(376, 186)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(109, 111)
+        PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
+        PictureBox1.TabIndex = 3
+        PictureBox1.TabStop = False
         ' 
         ' scrapeWebsiteButton
         ' 
-        Me.scrapeWebsiteButton.Location = New System.Drawing.Point(134, 327)
-        Me.scrapeWebsiteButton.Name = "scrapeWebsiteButton"
-        Me.scrapeWebsiteButton.Size = New System.Drawing.Size(116, 23)
-        Me.scrapeWebsiteButton.TabIndex = 2
-        Me.scrapeWebsiteButton.Text = "Scrape the web"
-        Me.scrapeWebsiteButton.UseVisualStyleBackColor = True
+        scrapeWebsiteButton.Location = New Point(134, 327)
+        scrapeWebsiteButton.Name = "scrapeWebsiteButton"
+        scrapeWebsiteButton.Size = New Size(116, 23)
+        scrapeWebsiteButton.TabIndex = 2
+        scrapeWebsiteButton.Text = "Scrape the web"
+        scrapeWebsiteButton.UseVisualStyleBackColor = True
         ' 
         ' Label2
         ' 
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(3, 45)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(639, 150)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = resources.GetString("Label2.Text")
+        Label2.ForeColor = Color.White
+        Label2.Location = New Point(3, 45)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(639, 150)
+        Label2.TabIndex = 1
+        Label2.Text = resources.GetString("Label2.Text")
         ' 
         ' Label1
         ' 
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Arial", 16.0!, System.Drawing.FontStyle.Bold)
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(0, 8)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(351, 26)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Document understanding module"
+        Label1.AutoSize = True
+        Label1.Font = New Font("Arial", 16F, FontStyle.Bold)
+        Label1.ForeColor = Color.White
+        Label1.Location = New Point(0, 8)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(351, 26)
+        Label1.TabIndex = 0
+        Label1.Text = "Document understanding module"
         ' 
         ' DocUnderstanding
         ' 
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.Panel1)
-        Me.Name = "DocUnderstanding"
-        Me.Size = New System.Drawing.Size(644, 452)
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(Panel1)
+        Name = "DocUnderstanding"
+        Size = New Size(644, 452)
+        Panel1.ResumeLayout(False)
+        Panel1.PerformLayout()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
+        ResumeLayout(False)
 
     End Sub
 

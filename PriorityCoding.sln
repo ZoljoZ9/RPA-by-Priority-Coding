@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PriorityCoding", "PriorityCoding\PriorityCoding.vbproj", "{D0CE0BF1-EABB-4D0C-A691-9FE4DD9293F6}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "PriorityCoding", "PriorityCoding\PriorityCoding.vbproj", "{D0CE0BF1-EABB-4D0C-A691-9FE4DD9293F6}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RPAbyPriorityCoding", "RPAbyPriorityCoding\RPAbyPriorityCoding.vdproj", "{A6153728-A837-461F-A65D-B7A2B8A3764E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,8 @@ Global
 		{D0CE0BF1-EABB-4D0C-A691-9FE4DD9293F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0CE0BF1-EABB-4D0C-A691-9FE4DD9293F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0CE0BF1-EABB-4D0C-A691-9FE4DD9293F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6153728-A837-461F-A65D-B7A2B8A3764E}.Debug|Any CPU.ActiveCfg = Debug
+		{A6153728-A837-461F-A65D-B7A2B8A3764E}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

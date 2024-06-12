@@ -1,89 +1,88 @@
-﻿' Import necessary namespaces if not already imported
+﻿Imports System.IO
+Imports System.Text
 Imports System.Windows.Forms
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports System.Runtime.InteropServices
+Imports System.Net
 
 Public Class MainScreen
-
-    ' Declare VScrollBar1 with WithEvents
-    Private WithEvents VScrollBar1 As New VScrollBar()
+    Private notifyIcon As NotifyIcon
 
     Private Sub MainScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Call a method to initialize dynamic controls
-        InitializeDynamicControls()
-        Panel1.Visible = True
+        ' Initialize the system tray icon
+        InitializeSystemTrayIcon()
 
-        ' Add the VScrollBar control to the form
-        Controls.Add(VScrollBar1)
-        ' Set the properties of the VScrollBar control
-        VScrollBar1.Dock = DockStyle.Right
-        VScrollBar1.Minimum = 0
-        VScrollBar1.Maximum = Panel2.Height
-        VScrollBar1.LargeChange = Panel2.Height - Panel1.Height ' Set the large change value
-        VScrollBar1.SmallChange = 20 ' Set the small change value
-
-        ' Set the value of the VScrollBar to 0 to ensure it starts at the top
-        VScrollBar1.Value = 0
-
-        ' Set the vertical scroll position of Panel2 to 0
-        Panel2.VerticalScroll.Value = 0
-
-        ' Set the form's border style to FixedSingle to disallow resizing
-        Me.FormBorderStyle = FormBorderStyle.FixedSingle
-    End Sub
-
-    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+        Me.KeyPreview = True
 
     End Sub
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
+    ' Handler for restoring the form from the system tray
+    Private Sub MenuItemRestore_Click(sender As Object, e As EventArgs)
+        ' Restore the form
+        Me.Show()
+        Me.WindowState = FormWindowState.Normal
+        ' Hide the system tray icon
+        notifyIcon.Visible = False
     End Sub
 
-    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
+    ' Override the OnFormClosing event to minimize the form to the system tray when closed
+    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+        MyBase.OnFormClosing(e)
 
+        If e.CloseReason = CloseReason.UserClosing Then
+            ' Minimize to system tray instead of closing
+            e.Cancel = True
+            Me.WindowState = FormWindowState.Minimized
+            Me.Hide()
+            notifyIcon.ShowBalloonTip(1000, "Application Minimized", "The application has been minimized to the system tray.", ToolTipIcon.Info)
+        End If
     End Sub
 
-    Private Sub InitializeDynamicControls()
-        ' Define an array with button names in descending order
-        Dim buttonNames() As String = {"Document understanding", "Button 1", "Button 2", "Button 3", "Button 4", "Button 5", "Button 6", "Button 7", "Button 8", "Button 9", "Button 10", "Button 11", "Button 12", "Button 13", "Button 14", "Button 15", "Button 16", "Button 17", "Button 18", "Button 19", "Button 20"}
+    ' Method to initialize the system tray icon
+    Private Sub InitializeSystemTrayIcon()
+        ' Initialize the NotifyIcon
+        notifyIcon = New NotifyIcon With {
+            .Icon = SystemIcons.Application,
+            .Visible = True
+        }
 
-        ' Add buttons dynamically based on the buttonNames array
-        For Each buttonName As String In buttonNames
-            Dim button As New System.Windows.Forms.Button() ' Fully qualify Button class
-            button.Text = buttonName
-            button.Dock = DockStyle.Bottom
-            AddHandler button.Click, AddressOf OpenForm ' Add click event handler
-            Panel2.Controls.Add(button)
-        Next
+        ' Add a context menu to the notifyIcon
+        Dim contextMenu As New ContextMenuStrip()
+        Dim menuItemRestore As New ToolStripMenuItem("Restore")
+        AddHandler menuItemRestore.Click, AddressOf MenuItemRestore_Click
+        contextMenu.Items.Add(menuItemRestore)
+        notifyIcon.ContextMenuStrip = contextMenu
+    End Sub
+
+    Public Sub ShowDocUnderstanding()
+        Panel1.Visible = False
+        DocUnderstanding1.Visible = True
+        MacInjection1.Visible = False
+        DocUnderstanding1.BringToFront()
+    End Sub
+
+    Public Sub ShowMacInjection()
+        Panel1.Visible = False
+        DocUnderstanding1.Visible = False
+        MacInjection1.Visible = True
+        MacInjection1.BringToFront()
     End Sub
 
     ' Inside the MainScreen class
     Private WithEvents docunderstanding As New DocUnderstanding()
 
-    Private Sub OpenForm(sender As Object, e As EventArgs)
-        ' Handle button click event
-        Dim button As System.Windows.Forms.Button = DirectCast(sender, System.Windows.Forms.Button)
-
-        ' Check which button was clicked
-        Select Case button.Text
-            Case "Document understanding"
-                ' Show docunderstanding UserControl
-                docunderstanding.Show()
-
-                ' Hide Panel1
-                Panel1.Visible = False
-
-                ' Bring docunderstanding UserControl to the front
-                docunderstanding.BringToFront()
-            Case Else
-                ' Handle other buttons here
-                MessageBox.Show("This module is not yet developed, please email matthew@zoljan.com for urgent need!")
-        End Select
-    End Sub
-
     ' Event handler for the Scroll event of the VScrollBar
-    Private Sub VScrollBar1_Scroll(sender As Object, e As ScrollEventArgs) Handles VScrollBar1.Scroll
-        ' Adjust the location of Panel2 based on the scrollbar value
-        Panel2.Location = New Point(Panel2.Location.X, -VScrollBar1.Value)
+    ' Rename one of the event handlers to make them unique
+
+    Private Sub MacInjection1_Load(sender As Object, e As EventArgs) Handles MacInjection1.Load
+        ' No additional code needed here for now
     End Sub
+
+    Private Sub SideBar1_Load(sender As Object, e As EventArgs)
+    End Sub
+
+    Private Sub SideBar2_Load(sender As Object, e As EventArgs)
+    End Sub
+
+
+
 End Class
