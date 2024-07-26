@@ -14,7 +14,9 @@
   <ItemGroup>
     <Compile Remove="Form1.Designer.vb" />
   </ItemGroup>
-
+  <ItemGroup>
+    <None Include="MyKey.snk" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Form1.resx" />
   </ItemGroup>
@@ -59,12 +61,31 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="My Project\Settings.Designer.vb">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
+  
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Certificate.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MyKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Update="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Update="splash_layout.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -81,6 +102,8 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.58" />
     <PackageReference Include="itext7" Version="8.0.3" />
     <PackageReference Include="PdfPig" Version="0.1.8" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
   </ItemGroup>
 
   <ItemGroup>

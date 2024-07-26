@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Drawing.Drawing2D
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class SideBar
     Inherits System.Windows.Forms.UserControl
 
@@ -57,7 +59,7 @@ Partial Class SideBar
         ' 
         Panel1.AutoScroll = True
         Panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink
-        Panel1.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Panel1.BackColor = Color.FromArgb(CByte(0), CByte(50), CByte(0))
         Panel1.Controls.Add(Button27)
         Panel1.Controls.Add(Button26)
         Panel1.Controls.Add(Button25)
@@ -91,31 +93,41 @@ Partial Class SideBar
         Panel1.TabIndex = 0
         ' 
         ' Button27
-        ' 
+        '
         Button27.Location = New Point(3, 757)
         Button27.Name = "Button27"
         Button27.Size = New Size(157, 23)
         Button27.TabIndex = 26
         Button27.Text = "Button27"
         Button27.UseVisualStyleBackColor = True
-        ' 
+        Button27.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button27.FlatStyle = FlatStyle.Flat
+        AddHandler Button27.Paint, AddressOf Me.Button_Paint
+
         ' Button26
-        ' 
+        '
         Button26.Location = New Point(3, 728)
         Button26.Name = "Button26"
         Button26.Size = New Size(157, 23)
         Button26.TabIndex = 25
         Button26.Text = "Button26"
         Button26.UseVisualStyleBackColor = True
-        ' 
+        Button26.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button26.FlatStyle = FlatStyle.Flat
+        AddHandler Button26.Paint, AddressOf Me.Button_Paint
+
         ' Button25
-        ' 
+        '
         Button25.Location = New Point(3, 699)
         Button25.Name = "Button25"
         Button25.Size = New Size(157, 23)
         Button25.TabIndex = 24
         Button25.Text = "Button25"
         Button25.UseVisualStyleBackColor = True
+        Button25.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button25.FlatStyle = FlatStyle.Flat
+        AddHandler Button25.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button24
         ' 
@@ -125,6 +137,10 @@ Partial Class SideBar
         Button24.TabIndex = 23
         Button24.Text = "Button24"
         Button24.UseVisualStyleBackColor = True
+        Button24.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button24.FlatStyle = FlatStyle.Flat
+        AddHandler Button24.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button23
         ' 
@@ -134,6 +150,10 @@ Partial Class SideBar
         Button23.TabIndex = 22
         Button23.Text = "Button23"
         Button23.UseVisualStyleBackColor = True
+        Button23.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button23.FlatStyle = FlatStyle.Flat
+        AddHandler Button23.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button22
         ' 
@@ -143,6 +163,10 @@ Partial Class SideBar
         Button22.TabIndex = 21
         Button22.Text = "Button22"
         Button22.UseVisualStyleBackColor = True
+        Button22.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button22.FlatStyle = FlatStyle.Flat
+        AddHandler Button22.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button21
         ' 
@@ -152,6 +176,10 @@ Partial Class SideBar
         Button21.TabIndex = 20
         Button21.Text = "Button21"
         Button21.UseVisualStyleBackColor = True
+        Button21.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button21.FlatStyle = FlatStyle.Flat
+        AddHandler Button21.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button20
         ' 
@@ -161,6 +189,10 @@ Partial Class SideBar
         Button20.TabIndex = 19
         Button20.Text = "Button20"
         Button20.UseVisualStyleBackColor = True
+        Button20.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button20.FlatStyle = FlatStyle.Flat
+        AddHandler Button20.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button19
         ' 
@@ -170,6 +202,10 @@ Partial Class SideBar
         Button19.TabIndex = 18
         Button19.Text = "Button19"
         Button19.UseVisualStyleBackColor = True
+        Button19.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button19.FlatStyle = FlatStyle.Flat
+        AddHandler Button19.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button18
         ' 
@@ -179,6 +215,10 @@ Partial Class SideBar
         Button18.TabIndex = 17
         Button18.Text = "Button18"
         Button18.UseVisualStyleBackColor = True
+        Button18.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button18.FlatStyle = FlatStyle.Flat
+        AddHandler Button18.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button17
         ' 
@@ -188,6 +228,10 @@ Partial Class SideBar
         Button17.TabIndex = 16
         Button17.Text = "Button17"
         Button17.UseVisualStyleBackColor = True
+        Button17.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button17.FlatStyle = FlatStyle.Flat
+        AddHandler Button17.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button16
         ' 
@@ -197,6 +241,10 @@ Partial Class SideBar
         Button16.TabIndex = 15
         Button16.Text = "Button16"
         Button16.UseVisualStyleBackColor = True
+        Button16.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button16.FlatStyle = FlatStyle.Flat
+        AddHandler Button16.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button15
         ' 
@@ -206,6 +254,10 @@ Partial Class SideBar
         Button15.TabIndex = 14
         Button15.Text = "Button15"
         Button15.UseVisualStyleBackColor = True
+        Button15.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button15.FlatStyle = FlatStyle.Flat
+        AddHandler Button15.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button14
         ' 
@@ -215,6 +267,10 @@ Partial Class SideBar
         Button14.TabIndex = 13
         Button14.Text = "Button14"
         Button14.UseVisualStyleBackColor = True
+        Button14.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button14.FlatStyle = FlatStyle.Flat
+        AddHandler Button14.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button13
         ' 
@@ -224,6 +280,10 @@ Partial Class SideBar
         Button13.TabIndex = 12
         Button13.Text = "Button13"
         Button13.UseVisualStyleBackColor = True
+        Button13.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button13.FlatStyle = FlatStyle.Flat
+        AddHandler Button13.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button12
         ' 
@@ -233,6 +293,10 @@ Partial Class SideBar
         Button12.TabIndex = 11
         Button12.Text = "Button12"
         Button12.UseVisualStyleBackColor = True
+        Button12.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button12.FlatStyle = FlatStyle.Flat
+        AddHandler Button12.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button11
         ' 
@@ -242,6 +306,10 @@ Partial Class SideBar
         Button11.TabIndex = 10
         Button11.Text = "Button11"
         Button11.UseVisualStyleBackColor = True
+        Button11.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button11.FlatStyle = FlatStyle.Flat
+        AddHandler Button11.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button10
         ' 
@@ -251,6 +319,10 @@ Partial Class SideBar
         Button10.TabIndex = 9
         Button10.Text = "Button10"
         Button10.UseVisualStyleBackColor = True
+        Button10.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button10.FlatStyle = FlatStyle.Flat
+        AddHandler Button10.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button9
         ' 
@@ -260,6 +332,10 @@ Partial Class SideBar
         Button9.TabIndex = 8
         Button9.Text = "Button9"
         Button9.UseVisualStyleBackColor = True
+        Button9.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button9.FlatStyle = FlatStyle.Flat
+        AddHandler Button9.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button8
         ' 
@@ -269,6 +345,10 @@ Partial Class SideBar
         Button8.TabIndex = 7
         Button8.Text = "Button8"
         Button8.UseVisualStyleBackColor = True
+        Button8.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button8.FlatStyle = FlatStyle.Flat
+        AddHandler Button8.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button7
         ' 
@@ -278,6 +358,10 @@ Partial Class SideBar
         Button7.TabIndex = 6
         Button7.Text = "Button7"
         Button7.UseVisualStyleBackColor = True
+        Button7.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button7.FlatStyle = FlatStyle.Flat
+        AddHandler Button7.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button6
         ' 
@@ -287,6 +371,10 @@ Partial Class SideBar
         Button6.TabIndex = 5
         Button6.Text = "Button6"
         Button6.UseVisualStyleBackColor = True
+        Button6.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button6.FlatStyle = FlatStyle.Flat
+        AddHandler Button6.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button5
         ' 
@@ -296,6 +384,10 @@ Partial Class SideBar
         Button5.TabIndex = 4
         Button5.Text = "Button5"
         Button5.UseVisualStyleBackColor = True
+        Button5.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button5.FlatStyle = FlatStyle.Flat
+        AddHandler Button5.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button4
         ' 
@@ -305,6 +397,10 @@ Partial Class SideBar
         Button4.TabIndex = 3
         Button4.Text = "Button4"
         Button4.UseVisualStyleBackColor = True
+        Button4.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button4.FlatStyle = FlatStyle.Flat
+        AddHandler Button4.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button3
         ' 
@@ -314,6 +410,10 @@ Partial Class SideBar
         Button3.TabIndex = 2
         Button3.Text = "Button3"
         Button3.UseVisualStyleBackColor = True
+        Button3.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button3.FlatStyle = FlatStyle.Flat
+        AddHandler Button3.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button2
         ' 
@@ -323,6 +423,10 @@ Partial Class SideBar
         Button2.TabIndex = 1
         Button2.Text = "Macro Injection Engine"
         Button2.UseVisualStyleBackColor = True
+        Button2.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button2.FlatStyle = FlatStyle.Flat
+        AddHandler Button2.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' Button1
         ' 
@@ -332,6 +436,10 @@ Partial Class SideBar
         Button1.TabIndex = 0
         Button1.Text = "Document Understanding"
         Button1.UseVisualStyleBackColor = True
+        Button1.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button1.FlatStyle = FlatStyle.Flat
+        AddHandler Button1.Paint, AddressOf Me.Button_Paint
+
         ' 
         ' SideBar
         ' 
@@ -346,7 +454,26 @@ Partial Class SideBar
         Panel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
+    ' Paint event handler to draw rounded corners
+    ' Paint event handler to draw rounded corners
+    Private Sub Button_Paint(ByVal sender As Object, ByVal e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim rect As New Rectangle(0, 0, button.Width, button.Height)
+        Dim path As New GraphicsPath()
+        Dim radius As Integer = 20 ' Increase the corner radius for more rounded corners
 
+        ' Enable anti-aliasing for smoother edges
+        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
+
+        ' Define a rounded rectangle path
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseAllFigures()
+
+        button.Region = New Region(path)
+    End Sub
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label1 As Label
