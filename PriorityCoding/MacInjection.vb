@@ -29,6 +29,10 @@ Public Class MacInjection
     Private Const HOTKEY_ID_F10 As Integer = 10
     Private Const HOTKEY_ID_F11 As Integer = 11
     Private Const HOTKEY_ID_F12 As Integer = 12
+    ' Declare the WebView2 controls at the class level
+    Private WithEvents webView21 As New Microsoft.Web.WebView2.WinForms.WebView2()
+    Private WithEvents webView22 As New Microsoft.Web.WebView2.WinForms.WebView2()
+    ' Add declarations for other WebView2 controls if necessary
 
     ' SQLite connection string and connection object
     Private connectionString As String = $"Data Source={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mydatabase.db")};Version=3;"
@@ -62,6 +66,22 @@ Public Class MacInjection
     Private button11 As New Button()
     Private textBox12 As New TextBox()
     Private button12 As New Button()
+    Private Async Sub InitializeWebViewControls()
+        Try
+            ' Initialize WebView2 for PictureBox1
+            Await webView21.EnsureCoreWebView2Async(Nothing)
+            webView21.Source = New Uri("about:blank") ' Load blank initially or any valid URL
+            Me.Controls.Add(webView21)
+
+            ' Initialize WebView2 for PictureBox2 (if needed)
+            Await webView22.EnsureCoreWebView2Async(Nothing)
+            webView22.Source = New Uri("about:blank") ' Load blank initially or any valid URL
+            Me.Controls.Add(webView22)
+
+        Catch ex As Exception
+            Debug.WriteLine($"Error initializing WebView2: {ex.Message}")
+        End Try
+    End Sub
 
     Public Sub New()
         InitializeComponent()
@@ -80,6 +100,9 @@ Public Class MacInjection
         Catch ex As Exception
             Debug.WriteLine($"Error opening SQLite connection: {ex.Message}")
         End Try
+
+        ' Initialize the WebView2 controls for displaying HTML content
+        InitializeWebViewControls()
 
         ' Initialize TextBox and Button controls
         InitializeControls()
@@ -231,44 +254,62 @@ Public Class MacInjection
             Select Case m.WParam.ToInt32()
                 Case HOTKEY_ID_F1
                     Debug.WriteLine("F1 was hit")
-                    ExecutePictureBoxMacro("PictureBox1")
+                    ExecutePictureBoxMacroAsync("PictureBox1")
                 Case HOTKEY_ID_F2
                     Debug.WriteLine("F2 was hit")
-                    ExecutePictureBoxMacro("PictureBox2")
+                    ExecutePictureBoxMacroAsync("PictureBox2")
                 Case HOTKEY_ID_F3
                     Debug.WriteLine("F3 was hit")
-                    ExecutePictureBoxMacro("PictureBox3")
+                    ExecutePictureBoxMacroAsync("PictureBox3")
                 Case HOTKEY_ID_F4
                     Debug.WriteLine("F4 was hit")
-                    ExecutePictureBoxMacro("PictureBox4")
+                    ExecutePictureBoxMacroAsync("PictureBox4")
                 Case HOTKEY_ID_F5
                     Debug.WriteLine("F5 was hit")
-                    ExecutePictureBoxMacro("PictureBox5")
+                    ExecutePictureBoxMacroAsync("PictureBox5")
                 Case HOTKEY_ID_F6
                     Debug.WriteLine("F6 was hit")
-                    ExecutePictureBoxMacro("PictureBox6")
+                    ExecutePictureBoxMacroAsync("PictureBox6")
                 Case HOTKEY_ID_F7
                     Debug.WriteLine("F7 was hit")
-                    ExecutePictureBoxMacro("PictureBox7")
+                    ExecutePictureBoxMacroAsync("PictureBox7")
                 Case HOTKEY_ID_F8
                     Debug.WriteLine("F8 was hit")
-                    ExecutePictureBoxMacro("PictureBox8")
+                    ExecutePictureBoxMacroAsync("PictureBox8")
                 Case HOTKEY_ID_F9
                     Debug.WriteLine("F9 was hit")
-                    ExecutePictureBoxMacro("PictureBox9")
+                    ExecutePictureBoxMacroAsync("PictureBox9")
                 Case HOTKEY_ID_F10
                     Debug.WriteLine("F10 was hit")
-                    ExecutePictureBoxMacro("PictureBox10")
+                    ExecutePictureBoxMacroAsync("PictureBox10")
                 Case HOTKEY_ID_F11
                     Debug.WriteLine("F11 was hit")
-                    ExecutePictureBoxMacro("PictureBox11")
+                    ExecutePictureBoxMacroAsync("PictureBox11")
                 Case HOTKEY_ID_F12
                     Debug.WriteLine("F12 was hit")
-                    ExecutePictureBoxMacro("PictureBox12")
+                    ExecutePictureBoxMacroAsync("PictureBox12")
             End Select
         End If
         MyBase.WndProc(m)
     End Sub
+
+    Private Async Sub ExecutePictureBoxMacroAsync(ByVal pictureBoxName As String)
+        Debug.WriteLine($"{pictureBoxName} macro action executed")
+
+        ' Reload the latest data for this PictureBox from the database
+        Await ReloadPictureBoxInformationFromDatabase(pictureBoxName)
+
+        ' Now check for the updated pictureBox content
+        If pictureBoxInformation.ContainsKey(pictureBoxName) Then
+            Dim information As String = pictureBoxInformation(pictureBoxName)
+            Debug.WriteLine("Updated information retrieved from " & pictureBoxName & ": " & information)
+            ' Simulate pasting the information into a focused text box
+            SendKeys.SendWait(information)
+        Else
+            Debug.WriteLine("No updated information found for " & pictureBoxName)
+        End If
+    End Sub
+
 
     ' Unregister the hotkeys when the control is disposed
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
@@ -295,51 +336,125 @@ Public Class MacInjection
         End If
         MyBase.Dispose(disposing)
     End Sub
+    Private currentPictureBoxName As String
 
     ' Method to add information for a PictureBox and save to SQLite
+    ' Method to receive formatted content from EditorForm
+    ' Method to receive formatted content from EditorForm
+    ' Method to receive formatted content from EditorForm
+    ' Method to receive formatted content from EditorForm
+    ' Debug added here to trace content passed from Quill editor
+    Public Sub FormattedContentFromEditor(content As String)
+        ' Debugging: Print the received content
+        Debug.WriteLine("Content from Quill Editor: " & content)
+
+        ' Ensure the content is not empty
+        If String.IsNullOrWhiteSpace(content) Then
+            Debug.WriteLine("No content to save.")
+            Return
+        End If
+
+        ' Save the content to the database and update the UI
+        SaveToDatabase(currentPictureBoxName, content)
+        UpdateTextBox(currentPictureBoxName, content)
+    End Sub
+
+
+
+
+
+    ' Method to open EditorForm for a specific PictureBox
+    ' Method to handle the content from the Quill editor and update the TextBox
     Private Sub AddInformationToPictureBox(ByVal pictureBoxName As String)
-        Debug.WriteLine("AddInformationToPictureBox called for " & pictureBoxName)
+        ' Set currentPictureBoxName for later use
+        currentPictureBoxName = pictureBoxName
+
+        ' Retrieve existing information for the PictureBox (if any)
         Dim existingInformation As String = If(pictureBoxInformation.ContainsKey(pictureBoxName), pictureBoxInformation(pictureBoxName), String.Empty)
-        Dim prompt As String = If(String.IsNullOrEmpty(existingInformation), "Enter information for " & pictureBoxName, "Current information: " & existingInformation & vbCrLf & "Enter new information for " & pictureBoxName)
-        Dim information As String = InputBox(prompt, "Information Input", existingInformation)
-        If Not String.IsNullOrEmpty(information) Then
-            ' Store the information in the dictionary
-            pictureBoxInformation(pictureBoxName) = information
-            Debug.WriteLine("Information added for " & pictureBoxName & ": " & information)
 
-            ' Save to SQLite database
-            SaveToDatabase(pictureBoxName, information)
+        ' Create a new instance of EditorForm and pass the current instance of MacInjection
+        Dim editorForm As New EditorForm(Me)
 
-            ' Update the corresponding TextBox
-            If pictureBoxName = "PictureBox1" Then
-                textBox1.Text = information
-            ElseIf pictureBoxName = "PictureBox2" Then
-                textBox2.Text = information
-            ElseIf pictureBoxName = "PictureBox3" Then
-                textBox3.Text = information
-            ElseIf pictureBoxName = "PictureBox4" Then
-                textBox4.Text = information
-            ElseIf pictureBoxName = "PictureBox5" Then
-                textBox5.Text = information
-            ElseIf pictureBoxName = "PictureBox6" Then
-                textBox6.Text = information
-            ElseIf pictureBoxName = "PictureBox7" Then
-                textBox7.Text = information
-            ElseIf pictureBoxName = "PictureBox8" Then
-                textBox8.Text = information
-            ElseIf pictureBoxName = "PictureBox9" Then
-                textBox9.Text = information
-            ElseIf pictureBoxName = "PictureBox10" Then
-                textBox10.Text = information
-            ElseIf pictureBoxName = "PictureBox11" Then
-                textBox11.Text = information
-            ElseIf pictureBoxName = "PictureBox12" Then
-                textBox12.Text = information
-            End If
+        ' Load existing content into Quill editor if it exists
+        If Not String.IsNullOrEmpty(existingInformation) Then
+            editorForm.SetContent(existingInformation) ' Pass the existing content to Quill
+        End If
+
+        ' Show the editor form as a dialog
+        If editorForm.ShowDialog() = DialogResult.OK Then
+            ' The Quill editor was closed successfully and content was updated in FormattedContentFromEditor
+            Debug.WriteLine("EditorForm closed and content updated successfully.")
         Else
-            Debug.WriteLine("No information entered for " & pictureBoxName)
+            Debug.WriteLine("EditorForm was canceled.")
         End If
     End Sub
+
+
+
+
+    ' Method to update TextBox/WebView2 based on PictureBox name
+    Private Async Sub UpdateTextBox(ByVal pictureBoxName As String, ByVal content As String)
+        Try
+            If Not String.IsNullOrWhiteSpace(content) Then
+                ' Decode HTML entities and pass valid HTML to WebView2
+                Dim decodedContent As String = System.Net.WebUtility.HtmlDecode(content)
+                Dim htmlContent As String = $"<html><body>{decodedContent}</body></html>"
+
+                ' Ensure WebView2 is initialized before using it
+                Await webView21.EnsureCoreWebView2Async(Nothing)
+
+                Select Case pictureBoxName
+                    Case "PictureBox1"
+                        Debug.WriteLine($"Updating WebView2 for PictureBox1 with content: {decodedContent}")
+                        webView21.NavigateToString(htmlContent)
+                        ' Handle other PictureBoxes as needed
+                End Select
+            Else
+                Debug.WriteLine("Content is empty or null.")
+            End If
+        Catch ex As Exception
+            Debug.WriteLine($"Error in UpdateTextBox for {pictureBoxName}: {ex.Message}")
+        End Try
+    End Sub
+
+
+
+
+
+
+    ' Save information to SQLite database, updating existing records if necessary
+    Private Sub SaveToDatabase(ByVal pictureBoxName As String, ByVal information As String)
+        Try
+            ' Ensure content is not null or empty
+            If String.IsNullOrWhiteSpace(information) Then
+                Debug.WriteLine($"Cannot save empty or null content for {pictureBoxName}")
+                Return
+            End If
+
+            ' Debugging: Log what we are saving
+            Debug.WriteLine($"Saving content for {pictureBoxName}: {information}")
+
+            ' Insert or update the content in the SQLite database
+            Dim commandText As String = "INSERT INTO MyTable (Name, Content) " &
+                                    "VALUES (@pictureBoxName, @information) " &
+                                    "ON CONFLICT(Name) DO UPDATE SET Content = excluded.Content;"
+
+            Using cmd As New SQLiteCommand(commandText, connection)
+                cmd.Parameters.AddWithValue("@pictureBoxName", pictureBoxName)
+                cmd.Parameters.AddWithValue("@information", information)
+                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+                Debug.WriteLine($"Data saved to SQLite database. Rows affected: {rowsAffected}, Information: {information}")
+            End Using
+
+        Catch ex As Exception
+            ' Log any errors during the saving process
+            Debug.WriteLine($"Error saving data to SQLite: {ex.Message}")
+        End Try
+    End Sub
+
+
+
+
 
     ' Macro action for a PictureBox
     Private Sub ExecutePictureBoxMacro(ByVal pictureBoxName As String)
@@ -355,21 +470,9 @@ Public Class MacInjection
         End If
     End Sub
 
-    ' Save information to SQLite database, updating existing records if necessary
-    Private Sub SaveToDatabase(ByVal pictureBoxName As String, ByVal information As String)
-        Try
-            Dim commandText As String = "INSERT INTO PictureBoxData (PictureBoxName, Information) VALUES (@pictureBoxName, @information) " &
-                                    "ON CONFLICT(PictureBoxName) DO UPDATE SET Information = excluded.Information;"
-            Using cmd As New SQLiteCommand(commandText, connection)
-                cmd.Parameters.AddWithValue("@pictureBoxName", pictureBoxName)
-                cmd.Parameters.AddWithValue("@information", information)
-                Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
-                Debug.WriteLine("Data saved to SQLite database. Rows affected: " & rowsAffected)
-            End Using
-        Catch ex As Exception
-            Debug.WriteLine($"Error saving data to SQLite: {ex.Message}")
-        End Try
-    End Sub
+
+
+
 
 
     ' Click event handler for PictureBox1
@@ -498,48 +601,31 @@ Public Class MacInjection
         Me.Focus()
         Debug.WriteLine("MacInjection control loaded and focused.")
 
-        ' Load information from database and display it
+        ' Load information from the database and display it
         LoadInformationFromDatabase()
     End Sub
 
-    ' Load information from database
+    ' Load information from the database
     Private Sub LoadInformationFromDatabase()
         Try
-            Dim commandText As String = "SELECT PictureBoxName, Information FROM PictureBoxData;"
+            Dim commandText As String = "SELECT Name, Content FROM MyTable;"
             Using cmd As New SQLiteCommand(commandText, connection)
                 Using reader As SQLiteDataReader = cmd.ExecuteReader()
                     While reader.Read()
-                        Dim pictureBoxName As String = reader("PictureBoxName").ToString()
-                        Dim information As String = reader("Information").ToString()
-                        pictureBoxInformation(pictureBoxName) = information
+                        Dim pictureBoxName As String = reader("Name").ToString()
+                        Dim content As String = reader("Content").ToString()
 
-                        ' Set the information in the corresponding TextBox
-                        Select Case pictureBoxName
-                            Case "PictureBox1"
-                                textBox1.Text = information
-                            Case "PictureBox2"
-                                textBox2.Text = information
-                            Case "PictureBox3"
-                                textBox3.Text = information
-                            Case "PictureBox4"
-                                textBox4.Text = information
-                            Case "PictureBox5"
-                                textBox5.Text = information
-                            Case "PictureBox6"
-                                textBox6.Text = information
-                            Case "PictureBox7"
-                                textBox7.Text = information
-                            Case "PictureBox8"
-                                textBox8.Text = information
-                            Case "PictureBox9"
-                                textBox9.Text = information
-                            Case "PictureBox10"
-                                textBox10.Text = information
-                            Case "PictureBox11"
-                                textBox11.Text = information
-                            Case "PictureBox12"
-                                textBox12.Text = information
-                        End Select
+                        ' Log retrieved data
+                        Debug.WriteLine($"Retrieved from database: {pictureBoxName} - {content}")
+
+                        ' Decode the HTML content if necessary
+                        Dim decodedContent As String = System.Net.WebUtility.HtmlDecode(content)
+
+                        ' Store the decoded content in the dictionary
+                        pictureBoxInformation(pictureBoxName) = decodedContent
+
+                        ' Set the information in the corresponding TextBox/WebView2
+                        UpdateTextBox(pictureBoxName, decodedContent)
                     End While
                 End Using
             End Using
@@ -551,13 +637,60 @@ Public Class MacInjection
     ' Create the PictureBoxData table if it does not exist
     Private Sub CreateTableIfNotExists()
         Try
-            Dim commandText As String = "CREATE TABLE IF NOT EXISTS PictureBoxData (PictureBoxName TEXT PRIMARY KEY, Information TEXT);"
+            ' Ensure the connection is open
+            If connection Is Nothing Then
+                connection = New SQLiteConnection(connectionString)
+            End If
+            If connection.State = ConnectionState.Closed Then
+                connection.Open()
+            End If
+
+            ' SQL command to create the table if it does not exist
+            Dim commandText As String = "CREATE TABLE IF NOT EXISTS MyTable (" &
+                                        "ID INTEGER PRIMARY KEY AUTOINCREMENT, " &
+                                        "Name TEXT NOT NULL UNIQUE, " &
+                                        "Content TEXT);"
+
+            ' Execute the command to create the table
             Using cmd As New SQLiteCommand(commandText, connection)
                 cmd.ExecuteNonQuery()
             End Using
+
+            ' Log table creation or confirmation
+            Debug.WriteLine("Table 'MyTable' is created or already exists.")
+
         Catch ex As Exception
-            Debug.WriteLine($"Error creating table: {ex.Message}")
+            ' Log any errors during table creation
+            Debug.WriteLine($"Error creating table 'MyTable': {ex.Message}")
         End Try
     End Sub
+    Private Async Function ReloadPictureBoxInformationFromDatabase(ByVal pictureBoxName As String) As Task
+        Try
+            ' SQL command to get the latest information for the specified PictureBox
+            Dim commandText As String = "SELECT Content FROM MyTable WHERE Name = @pictureBoxName;"
+            Using cmd As New SQLiteCommand(commandText, connection)
+                cmd.Parameters.AddWithValue("@pictureBoxName", pictureBoxName)
+                Using reader As SQLiteDataReader = Await cmd.ExecuteReaderAsync()
+                    If reader.Read() Then
+                        Dim information As String = reader("Content").ToString()
+                        ' Decode the HTML content if necessary
+                        Dim decodedInformation As String = System.Net.WebUtility.HtmlDecode(information)
+
+                        ' Update the dictionary with the latest data
+                        pictureBoxInformation(pictureBoxName) = decodedInformation
+
+                        ' Log retrieved data for debugging
+                        Debug.WriteLine($"Latest data for {pictureBoxName}: {decodedInformation}")
+                    Else
+                        Debug.WriteLine($"No data found in the database for {pictureBoxName}")
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            Debug.WriteLine($"Error reloading data from SQLite for {pictureBoxName}: {ex.Message}")
+        End Try
+    End Function
+
+
 
 End Class
