@@ -59,7 +59,7 @@ Partial Class SplashScreen
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MaximizeBox = False
         Name = "SplashScreen"
-        Text = "SplashScreen"
+        Text = "RPA by Priority Coding"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub

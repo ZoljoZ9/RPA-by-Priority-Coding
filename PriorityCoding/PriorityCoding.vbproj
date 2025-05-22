@@ -10,8 +10,13 @@
     <UseWPF>True</UseWPF>
     <ImportedNamespaces>System.Data=False,System.Drawing=False,System.Windows.Forms=False,Microsoft.VisualBasic=True,System=True,System.Collections=True,System.Collections.Generic=True,System.Diagnostics=True,System.Linq=True,System.Xml.Linq=True,System.Threading.Tasks=True,PriorityCoding=True</ImportedNamespaces>
   </PropertyGroup>
+<PropertyGroup>
+  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  <PublishTrimmed>false</PublishTrimmed>
+  <PublishSingleFile>false</PublishSingleFile>
+</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Compile Remove="Form1.Designer.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -28,8 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="bin\Debug\net8.0-windows\PriorityCoding.deps.json" />
-    <Content Include="bin\Debug\net8.0-windows\PriorityCoding.runtimeconfig.json" />
+    <Content Include="quill-editor.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -41,13 +47,6 @@
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Windows.Forms" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\net8.0-windows\PriorityCoding.dll" />
-    <None Include="bin\Debug\net8.0-windows\PriorityCoding.exe" />
-    <None Include="bin\Debug\net8.0-windows\PriorityCoding.pdb" />
-    <None Include="bin\Debug\net8.0-windows\splash_layout.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +77,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="atom-one-dark.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="katex.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -87,12 +92,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Update="quill.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="splash_layout.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="bin\Release\net8.0-windows\win-x64\" />
     <Folder Include="Profile\" />
   </ItemGroup>
 
@@ -101,6 +110,7 @@
     <PackageReference Include="EPPlus" Version="7.4.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2792.45" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PdfPig" Version="0.1.9" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />

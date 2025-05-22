@@ -8,42 +8,44 @@ Partial Class EditorForm
     Friend WithEvents webView21 As Microsoft.Web.WebView2.WinForms.WebView2
 
     Private Sub InitializeComponent()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.webView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
-        CType(Me.webView21, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        Button1 = New Button()
+        webView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
+        CType(webView21, ComponentModel.ISupportInitialize).BeginInit()
+        SuspendLayout()
         ' 
         ' Button1
         ' 
-        Me.Button1.Location = New System.Drawing.Point(305, 356)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Upload"
-        Me.Button1.UseVisualStyleBackColor = True
+        Button1.Location = New Point(305, 356)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(75, 23)
+        Button1.TabIndex = 0
+        Button1.Text = "Upload"
+        Button1.UseVisualStyleBackColor = True
         ' 
         ' webView21
         ' 
-        Me.webView21.AllowExternalDrop = True
-        Me.webView21.CreationProperties = Nothing
-        Me.webView21.DefaultBackgroundColor = System.Drawing.Color.White
-        Me.webView21.Location = New System.Drawing.Point(12, 38)
-        Me.webView21.Name = "webView21"
-        Me.webView21.Size = New System.Drawing.Size(751, 268)
-        Me.webView21.TabIndex = 1
-        Me.webView21.ZoomFactor = 1.0R
+        webView21.AllowExternalDrop = True
+        webView21.CreationProperties = Nothing
+        webView21.DefaultBackgroundColor = Color.White
+        webView21.Location = New Point(12, 38)
+        webView21.Name = "webView21"
+        webView21.Size = New Size(751, 268)
+        webView21.TabIndex = 1
+        webView21.ZoomFactor = 1R
         ' 
         ' EditorForm
         ' 
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0F, 15.0F)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Controls.Add(Me.webView21)
-        Me.Controls.Add(Me.Button1)
-        Me.Name = "EditorForm"
-        Me.Text = "EditorForm"
-        CType(Me.webView21, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(800, 450)
+        Controls.Add(webView21)
+        Controls.Add(Button1)
+        FormBorderStyle = FormBorderStyle.FixedDialog
+        MaximizeBox = False
+        Name = "EditorForm"
+        Text = "EditorForm"
+        CType(webView21, ComponentModel.ISupportInitialize).EndInit()
+        ResumeLayout(False)
     End Sub
 
     Friend WithEvents Button1 As Button

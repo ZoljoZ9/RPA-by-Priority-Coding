@@ -10,6 +10,18 @@
 *.userosscache
 *.sln.docstates
 
+# Ignore Android SDK/emulator files
+# Ignore Android AVD files
+.android/
+*.bin
+*.img
+*.ini
+*.json
+*.xml
+*.png
+*.pb
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

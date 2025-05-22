@@ -1,84 +1,120 @@
-﻿Public Class EditorForm
-    ' Reference to the calling MacInjection form
+﻿' Refactored version with proper RTE population, delayed WebView2 load handling, and fixed DB saving
+
+Imports Microsoft.Web.WebView2.Core
+Imports System.IO
+Imports System.Diagnostics
+Imports Newtonsoft.Json
+
+Public Class EditorForm
     Private callingForm As MacInjection
     Public Property FormattedContent As String
+    Private isWebViewReady As Boolean = False
+    Private queuedContent As String = Nothing
 
-    ' Constructor that accepts a reference to MacInjection
     Public Sub New(ByVal parentForm As MacInjection)
         InitializeComponent()
-
-        ' Set the reference to the calling MacInjection form
         Me.callingForm = parentForm
 
-        ' Initialize WebView2 and load the Quill editor
+        Try
+            Dim sourcePath As String = Path.Combine(Application.StartupPath, "quill-editor.html")
+            Dim destDir As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PriorityCoding")
+            Dim destPath As String = Path.Combine(destDir, "quill-editor.html")
+
+            If Not File.Exists(sourcePath) Then
+                MessageBox.Show("Missing source HTML file: " & sourcePath)
+                Return
+            End If
+
+            If Not Directory.Exists(destDir) Then
+                Directory.CreateDirectory(destDir)
+            End If
+
+            File.Copy(sourcePath, destPath, True)
+        Catch ex As Exception
+            MessageBox.Show("Copy failed: " & ex.Message)
+            Return
+        End Try
+
         InitializeWebViewAsync()
     End Sub
 
-    ' Initialize WebView2 and load Quill editor
     Private Async Sub InitializeWebViewAsync()
-        Try ' Load the local HTML file for Quill editor
-            Await webView21.EnsureCoreWebView2Async(Nothing)
-            webView21.Source = New Uri("file:///C:/Users/matth/OneDrive/Desktop/New%20Laptop/Code/PriorityCoding/PriorityCoding/quill-editor.html")
-            Debug.WriteLine("WebView2 loaded Quill editor successfully.")
+        Try
+            Dim userDataFolder As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PriorityCoding\WebView2Cache")
+            Dim env As CoreWebView2Environment = Await CoreWebView2Environment.CreateAsync(Nothing, userDataFolder)
+            Await webView21.EnsureCoreWebView2Async(env)
+
+            AddHandler webView21.CoreWebView2.NavigationCompleted, AddressOf OnWebViewNavigationCompleted
+
+            Dim htmlPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PriorityCoding\quill-editor.html")
+
+            If Not File.Exists(htmlPath) Then
+                MessageBox.Show("HTML file not found at: " & htmlPath)
+                Return
+            End If
+
+            Dim htmlContent As String = File.ReadAllText(htmlPath)
+            webView21.NavigateToString(htmlContent)
+
         Catch ex As Exception
-            Debug.WriteLine("Error initializing WebView2: " & ex.Message)
+            MessageBox.Show("Error initializing WebView2: " & ex.Message)
         End Try
     End Sub
 
-    ' Set existing content into Quill editor
+    Private Sub OnWebViewNavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs)
+        isWebViewReady = True
+        If Not String.IsNullOrEmpty(queuedContent) Then
+            InjectContent(queuedContent)
+            queuedContent = Nothing
+        End If
+    End Sub
+
     Public Sub SetContent(content As String)
-        ' Inject content into Quill editor using JavaScript
-        Dim script As String = $"quill.setText('{content.Replace("'", "\'")}');"
+        If isWebViewReady Then
+            InjectContent(content)
+        Else
+            queuedContent = content
+        End If
+    End Sub
+
+    Private Sub InjectContent(content As String)
+        Dim safeHtml As String = content.Replace("\", "\\").Replace("""", "\""")
+        Dim script As String = "quill.clipboard.dangerouslyPasteHTML(""" & safeHtml & """);"
         webView21.ExecuteScriptAsync(script)
     End Sub
 
-    ' Retrieve content from Quill editor
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        ' Retrieve content from the Quill editor
         Await GetEditorContent()
-
-        ' Ensure content is not null or empty before passing it back
         If String.IsNullOrWhiteSpace(FormattedContent) Then
             MessageBox.Show("No content to save!")
             Return
         End If
 
-        ' Debugging: Check if FormattedContent has been properly populated
-        Debug.WriteLine("FormattedContent after GetEditorContent: " & FormattedContent)
-
-        ' Call the method in MacInjection to pass back the formatted content
+        Debug.WriteLine("[SAVE] Sending content to MacInjection: " & FormattedContent)
         callingForm.FormattedContentFromEditor(FormattedContent)
 
-        ' Close the form with an OK result
+        ' Refresh data after save
+        If callingForm IsNot Nothing Then
+            Try
+                callingForm.LoadInformationFromDatabase()
+            Catch ex As Exception
+                Debug.WriteLine("Error refreshing data after save: " & ex.Message)
+            End Try
+        End If
+
         Me.DialogResult = DialogResult.OK
         Me.Close()
     End Sub
 
-
-
-
-
-    ' Retrieve content from Quill editor
     Public Async Function GetEditorContent() As Task
         Try
-            ' This retrieves the content from the Quill editor using JavaScript
             Dim result As String = Await webView21.ExecuteScriptAsync("quill.root.innerHTML;")
-
-            ' Check if the result contains valid HTML
-            If String.IsNullOrWhiteSpace(result) Then
-                Debug.WriteLine("No content retrieved from Quill editor.")
-            Else
-                Debug.WriteLine("Content retrieved from Quill Editor: " & result)
+            If Not String.IsNullOrEmpty(result) Then
+                FormattedContent = JsonConvert.DeserializeObject(Of String)(result)
+                Debug.WriteLine("[GET] Retrieved from WebView2: " & FormattedContent)
             End If
-
-            ' Assign the result to the FormattedContent property
-            FormattedContent = result.Trim()
-
         Catch ex As Exception
-            ' Log any errors during JavaScript execution
-            Debug.WriteLine("Error retrieving content from Quill editor: " & ex.Message)
+            Debug.WriteLine("Error retrieving content: " & ex.Message)
         End Try
     End Function
-
-
 End Class

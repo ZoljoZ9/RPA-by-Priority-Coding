@@ -15,7 +15,6 @@ Partial Class MacInjection
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MacInjection))
         Label1 = New Label()
         Label3 = New Label()
-        Label4 = New Label()
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
         PictureBox3 = New PictureBox()
@@ -28,6 +27,7 @@ Partial Class MacInjection
         PictureBox10 = New PictureBox()
         PictureBox11 = New PictureBox()
         PictureBox12 = New PictureBox()
+        Label4 = New Label()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
@@ -52,22 +52,13 @@ Partial Class MacInjection
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Font = New Font("Arial", 16.0F, FontStyle.Bold)
+        Label3.Font = New Font("Arial", 16F, FontStyle.Bold)
         Label3.ForeColor = Color.White
         Label3.Location = New Point(0, 0)
         Label3.Name = "Label3"
         Label3.Size = New Size(324, 26)
         Label3.TabIndex = 2
         Label3.Text = "Macro Injection Engine module"
-        ' 
-        ' Label4
-        ' 
-        Label4.ForeColor = Color.White
-        Label4.Location = New Point(3, 37)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(639, 150)
-        Label4.TabIndex = 3
-        Label4.Text = resources.GetString("Label4.Text")
         ' 
         ' PictureBox1
         ' 
@@ -191,9 +182,18 @@ Partial Class MacInjection
         PictureBox12.TabIndex = 4
         PictureBox12.TabStop = False
         ' 
+        ' Label4
+        ' 
+        Label4.ForeColor = Color.White
+        Label4.Location = New Point(3, 37)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(639, 150)
+        Label4.TabIndex = 3
+        Label4.Text = resources.GetString("Label4.Text")
+        ' 
         ' MacInjection
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(51), CByte(51), CByte(51))
         Controls.Add(PictureBox12)

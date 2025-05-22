@@ -7,6 +7,7 @@ Public Class DatabaseHelper
         ' Construct the connection string
         Dim dbFilePath As String = System.IO.Path.Combine(Application.StartupPath, "mydatabase.db")
         connectionString = $"Data Source={dbFilePath};Version=3;"
+        Debug.WriteLine("Database file path: " & dbFilePath)
 
         ' Ensure the database file exists or create it
         If Not System.IO.File.Exists(dbFilePath) Then

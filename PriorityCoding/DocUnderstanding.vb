@@ -444,6 +444,13 @@ Public Class DocUnderstanding
             radSingleFile.Text = "Scrape Single File"
             radEntireFolder.Text = "Scrape Entire Folder"
 
+
+            ' Disable maximize button and resizing
+            Me.MaximizeBox = False
+            Me.MinimizeBox = False
+            Me.FormBorderStyle = FormBorderStyle.FixedDialog
+            Me.StartPosition = FormStartPosition.CenterScreen ' Optional: to center the form
+
             ' Set form properties
             Me.Text = "Scrape File Options"
             Me.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -503,6 +510,22 @@ Public Class DocUnderstanding
     End Sub
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+
+    End Sub
+
+    Private Sub PictureBox2_Click_1(sender As Object, e As EventArgs) Handles PictureBox2.Click
+
+    End Sub
+
+    Private Sub PictureBox2_Click_2(sender As Object, e As EventArgs) Handles PictureBox2.Click
+
+    End Sub
+
+    Private Sub PictureBox1_Click_1(sender As Object, e As EventArgs) Handles PictureBox1.Click
 
     End Sub
 End Class

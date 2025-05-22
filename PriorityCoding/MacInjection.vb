@@ -1,7 +1,12 @@
-﻿Imports System.Runtime.InteropServices
-Imports System.Windows.Forms
-Imports System.Data.SQLite
+﻿Imports System.Data.SQLite
 Imports System.IO
+Imports System.Windows.Forms
+Imports System.Text
+Imports System.Runtime.InteropServices
+
+Imports System.Web
+
+
 
 Public Class MacInjection
     Inherits UserControl
@@ -296,19 +301,65 @@ Public Class MacInjection
     Private Async Sub ExecutePictureBoxMacroAsync(ByVal pictureBoxName As String)
         Debug.WriteLine($"{pictureBoxName} macro action executed")
 
-        ' Reload the latest data for this PictureBox from the database
+        ' Reload latest content
         Await ReloadPictureBoxInformationFromDatabase(pictureBoxName)
 
-        ' Now check for the updated pictureBox content
         If pictureBoxInformation.ContainsKey(pictureBoxName) Then
-            Dim information As String = pictureBoxInformation(pictureBoxName)
-            Debug.WriteLine("Updated information retrieved from " & pictureBoxName & ": " & information)
-            ' Simulate pasting the information into a focused text box
-            SendKeys.SendWait(information)
+            Dim html As String = pictureBoxInformation(pictureBoxName)
+
+            ' Create plain text fallback
+            Dim plainText As String = HtmlToPlainText(html)
+
+            ' Format HTML clipboard block
+            Dim htmlClipboard As String = WrapHtmlClipboardFormat(html)
+
+            ' Populate DataObject for clipboard
+            Dim dataObj As New DataObject()
+            dataObj.SetData(DataFormats.Html, htmlClipboard)
+            dataObj.SetData(DataFormats.Text, plainText)
+            dataObj.SetData(DataFormats.UnicodeText, plainText)
+
+            Clipboard.SetDataObject(dataObj, True)
+
+            ' Simulate Ctrl+V paste
+            SendKeys.SendWait("^v")
         Else
-            Debug.WriteLine("No updated information found for " & pictureBoxName)
+            Debug.WriteLine("No content found for " & pictureBoxName)
         End If
     End Sub
+
+    Private Function WrapHtmlClipboardFormat(htmlFragment As String) As String
+        Const HeaderTemplate As String =
+        "Version:0.9" & vbCrLf &
+        "StartHTML:{0:00000000}" & vbCrLf &
+        "EndHTML:{1:00000000}" & vbCrLf &
+        "StartFragment:{2:00000000}" & vbCrLf &
+        "EndFragment:{3:00000000}" & vbCrLf
+
+        Dim startFragment = "<!--StartFragment-->"
+        Dim endFragment = "<!--EndFragment-->"
+        Dim fullHtmlBody = $"<html><body>{startFragment}{htmlFragment}{endFragment}</body></html>"
+
+        Dim startHTML = HeaderTemplate.Length
+        Dim startFrag = fullHtmlBody.IndexOf(startFragment) + startHTML
+        Dim endFrag = fullHtmlBody.IndexOf(endFragment) + endFragment.Length + startHTML
+        Dim endHTML = fullHtmlBody.Length + startHTML
+
+        Dim header = String.Format(HeaderTemplate, startHTML, endHTML, startFrag, endFrag)
+
+        Return header & fullHtmlBody
+    End Function
+
+
+    Private Function HtmlToPlainText(html As String) As String
+        Dim browser As New WebBrowser()
+        browser.DocumentText = html
+        Do While browser.ReadyState <> WebBrowserReadyState.Complete
+            Application.DoEvents()
+        Loop
+        Return browser.Document.Body.InnerText
+    End Function
+
 
 
     ' Unregister the hotkeys when the control is disposed
@@ -606,7 +657,7 @@ Public Class MacInjection
     End Sub
 
     ' Load information from the database
-    Private Sub LoadInformationFromDatabase()
+    Public Sub LoadInformationFromDatabase()
         Try
             Dim commandText As String = "SELECT Name, Content FROM MyTable;"
             Using cmd As New SQLiteCommand(commandText, connection)

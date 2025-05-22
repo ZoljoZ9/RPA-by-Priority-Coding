@@ -95,7 +95,7 @@ Partial Class MainScreen
         KeyPreview = True
         MaximizeBox = False
         Name = "MainScreen"
-        Text = "MainScreen"
+        Text = "RPA by Priority Coding"
         CType(BindingSource1, ComponentModel.ISupportInitialize).EndInit()
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
