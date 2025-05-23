@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <None Remove="Resources\PCLogo.jpg" />
-    <None Remove="Resources\pclogo.png" />
     <None Remove="Resources\splash_layout.jpg" />
   </ItemGroup>
 
@@ -39,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\pclogo.png" />
     <EmbeddedResource Include="Resources\splash_layout.jpg" />
   </ItemGroup>
 
@@ -98,6 +96,9 @@
     <None Update="splash_layout.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="WebView2Loader.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -109,7 +110,7 @@
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
     <PackageReference Include="EPPlus" Version="7.4.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.67" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2792.45" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PdfPig" Version="0.1.9" />
     <PackageReference Include="SQLite" Version="3.13.0" />

@@ -4,39 +4,45 @@ Imports Microsoft.Web.WebView2.Core
 Imports System.IO
 Imports System.Diagnostics
 Imports Newtonsoft.Json
+Imports PriorityCoding.PathHelper
 
 Public Class EditorForm
     Private callingForm As MacInjection
     Public Property FormattedContent As String
     Private isWebViewReady As Boolean = False
     Private queuedContent As String = Nothing
+    Private htmlEditorPath As String
 
     Public Sub New(ByVal parentForm As MacInjection)
         InitializeComponent()
         Me.callingForm = parentForm
 
         Try
-            Dim sourcePath As String = Path.Combine(Application.StartupPath, "quill-editor.html")
-            Dim destDir As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PriorityCoding")
+            Dim destDir As String = GetUserDocumentsPriorityPath()
             Dim destPath As String = Path.Combine(destDir, "quill-editor.html")
+            htmlEditorPath = destPath
 
+            Dim sourcePath As String = Path.Combine(Application.StartupPath, "quill-editor.html")
             If Not File.Exists(sourcePath) Then
                 MessageBox.Show("Missing source HTML file: " & sourcePath)
                 Return
             End If
 
-            If Not Directory.Exists(destDir) Then
-                Directory.CreateDirectory(destDir)
+            If Not File.Exists(destPath) Then
+                File.Copy(sourcePath, destPath)
             End If
 
-            File.Copy(sourcePath, destPath, True)
+            Debug.WriteLine("Quill Editor HTML Path: " & htmlEditorPath)
+
         Catch ex As Exception
-            MessageBox.Show("Copy failed: " & ex.Message)
+            MessageBox.Show("Error preparing HTML file: " & ex.Message)
             Return
         End Try
 
         InitializeWebViewAsync()
     End Sub
+
+
 
     Private Async Sub InitializeWebViewAsync()
         Try
@@ -46,20 +52,19 @@ Public Class EditorForm
 
             AddHandler webView21.CoreWebView2.NavigationCompleted, AddressOf OnWebViewNavigationCompleted
 
-            Dim htmlPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PriorityCoding\quill-editor.html")
-
-            If Not File.Exists(htmlPath) Then
-                MessageBox.Show("HTML file not found at: " & htmlPath)
+            If Not File.Exists(htmlEditorPath) Then
+                MessageBox.Show("HTML file not found at: " & htmlEditorPath)
                 Return
             End If
 
-            Dim htmlContent As String = File.ReadAllText(htmlPath)
+            Dim htmlContent As String = File.ReadAllText(htmlEditorPath)
             webView21.NavigateToString(htmlContent)
 
         Catch ex As Exception
             MessageBox.Show("Error initializing WebView2: " & ex.Message)
         End Try
     End Sub
+
 
     Private Sub OnWebViewNavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs)
         isWebViewReady = True
@@ -82,6 +87,14 @@ Public Class EditorForm
         Dim script As String = "quill.clipboard.dangerouslyPasteHTML(""" & safeHtml & """);"
         webView21.ExecuteScriptAsync(script)
     End Sub
+
+    Public Function GetUserDocumentsPriorityPath() As String
+        Dim basePath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PriorityCoding")
+        If Not Directory.Exists(basePath) Then
+            Directory.CreateDirectory(basePath)
+        End If
+        Return basePath
+    End Function
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Await GetEditorContent()

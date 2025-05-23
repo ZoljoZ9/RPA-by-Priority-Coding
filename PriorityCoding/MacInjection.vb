@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Windows.Forms
 Imports System.Text
 Imports System.Runtime.InteropServices
+Imports PriorityCoding.PathHelper
 
 Imports System.Web
 
@@ -40,7 +41,7 @@ Public Class MacInjection
     ' Add declarations for other WebView2 controls if necessary
 
     ' SQLite connection string and connection object
-    Private connectionString As String = $"Data Source={Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mydatabase.db")};Version=3;"
+    Dim databaseFilePath As String = Path.Combine(GetUserDocumentsPriorityPath(), "mydatabase.db")
     Private connection As SQLiteConnection
 
     ' Dictionary to store information for each PictureBox
@@ -90,11 +91,12 @@ Public Class MacInjection
 
     Public Sub New()
         InitializeComponent()
-        ' Initialize SQLite connection
-        connection = New SQLiteConnection(connectionString)
+
+        ' Set up SQLite connection string inline
+        connection = New SQLiteConnection($"Data Source={Path.Combine(GetUserDocumentsPriorityPath(), "mydatabase.db")};Version=3;")
+
         Try
-            ' Ensure the database file exists
-            Dim databaseFilePath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "mydatabase.db")
+            Dim databaseFilePath As String = Path.Combine(GetUserDocumentsPriorityPath(), "mydatabase.db")
             If Not File.Exists(databaseFilePath) Then
                 SQLiteConnection.CreateFile(databaseFilePath)
             End If
@@ -106,13 +108,18 @@ Public Class MacInjection
             Debug.WriteLine($"Error opening SQLite connection: {ex.Message}")
         End Try
 
-        ' Initialize the WebView2 controls for displaying HTML content
         InitializeWebViewControls()
-
-        ' Initialize TextBox and Button controls
         InitializeControls()
     End Sub
 
+
+    Public Function GetUserDocumentsPriorityPath() As String
+        Dim basePath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PriorityCoding")
+        If Not Directory.Exists(basePath) Then
+            Directory.CreateDirectory(basePath)
+        End If
+        Return basePath
+    End Function
 
     Protected Overrides Sub OnHandleCreated(e As EventArgs)
         MyBase.OnHandleCreated(e)
@@ -690,7 +697,7 @@ Public Class MacInjection
         Try
             ' Ensure the connection is open
             If connection Is Nothing Then
-                connection = New SQLiteConnection(connectionString)
+                connection = New SQLiteConnection($"Data Source={Path.Combine(GetUserDocumentsPriorityPath(), "mydatabase.db")};Version=3;")
             End If
             If connection.State = ConnectionState.Closed Then
                 connection.Open()
@@ -698,9 +705,9 @@ Public Class MacInjection
 
             ' SQL command to create the table if it does not exist
             Dim commandText As String = "CREATE TABLE IF NOT EXISTS MyTable (" &
-                                        "ID INTEGER PRIMARY KEY AUTOINCREMENT, " &
-                                        "Name TEXT NOT NULL UNIQUE, " &
-                                        "Content TEXT);"
+                                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, " &
+                                    "Name TEXT NOT NULL UNIQUE, " &
+                                    "Content TEXT);"
 
             ' Execute the command to create the table
             Using cmd As New SQLiteCommand(commandText, connection)
@@ -715,6 +722,7 @@ Public Class MacInjection
             Debug.WriteLine($"Error creating table 'MyTable': {ex.Message}")
         End Try
     End Sub
+
     Private Async Function ReloadPictureBoxInformationFromDatabase(ByVal pictureBoxName As String) As Task
         Try
             ' SQL command to get the latest information for the specified PictureBox
