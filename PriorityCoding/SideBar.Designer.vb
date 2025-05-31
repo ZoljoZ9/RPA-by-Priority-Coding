@@ -93,353 +93,301 @@ Partial Class SideBar
         Panel1.TabIndex = 0
         ' 
         ' Button27
-        '
+        ' 
+        Button27.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button27.FlatStyle = FlatStyle.Flat
         Button27.Location = New Point(3, 757)
         Button27.Name = "Button27"
         Button27.Size = New Size(157, 23)
         Button27.TabIndex = 26
         Button27.Text = "Button27"
-        Button27.UseVisualStyleBackColor = True
-        Button27.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button27.FlatStyle = FlatStyle.Flat
-        AddHandler Button27.Paint, AddressOf Me.Button_Paint
-
+        Button27.UseVisualStyleBackColor = False
+        ' 
         ' Button26
-        '
+        ' 
+        Button26.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button26.FlatStyle = FlatStyle.Flat
         Button26.Location = New Point(3, 728)
         Button26.Name = "Button26"
         Button26.Size = New Size(157, 23)
         Button26.TabIndex = 25
         Button26.Text = "Button26"
-        Button26.UseVisualStyleBackColor = True
-        Button26.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button26.FlatStyle = FlatStyle.Flat
-        AddHandler Button26.Paint, AddressOf Me.Button_Paint
-
+        Button26.UseVisualStyleBackColor = False
+        ' 
         ' Button25
-        '
+        ' 
+        Button25.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button25.FlatStyle = FlatStyle.Flat
         Button25.Location = New Point(3, 699)
         Button25.Name = "Button25"
         Button25.Size = New Size(157, 23)
         Button25.TabIndex = 24
         Button25.Text = "Button25"
-        Button25.UseVisualStyleBackColor = True
-        Button25.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button25.FlatStyle = FlatStyle.Flat
-        AddHandler Button25.Paint, AddressOf Me.Button_Paint
-
+        Button25.UseVisualStyleBackColor = False
         ' 
         ' Button24
         ' 
+        Button24.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button24.FlatStyle = FlatStyle.Flat
         Button24.Location = New Point(4, 670)
         Button24.Name = "Button24"
         Button24.Size = New Size(157, 23)
         Button24.TabIndex = 23
         Button24.Text = "Button24"
-        Button24.UseVisualStyleBackColor = True
-        Button24.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button24.FlatStyle = FlatStyle.Flat
-        AddHandler Button24.Paint, AddressOf Me.Button_Paint
-
+        Button24.UseVisualStyleBackColor = False
         ' 
         ' Button23
         ' 
+        Button23.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button23.FlatStyle = FlatStyle.Flat
         Button23.Location = New Point(4, 641)
         Button23.Name = "Button23"
         Button23.Size = New Size(157, 23)
         Button23.TabIndex = 22
         Button23.Text = "Button23"
-        Button23.UseVisualStyleBackColor = True
-        Button23.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button23.FlatStyle = FlatStyle.Flat
-        AddHandler Button23.Paint, AddressOf Me.Button_Paint
-
+        Button23.UseVisualStyleBackColor = False
         ' 
         ' Button22
         ' 
+        Button22.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button22.FlatStyle = FlatStyle.Flat
         Button22.Location = New Point(3, 612)
         Button22.Name = "Button22"
         Button22.Size = New Size(157, 23)
         Button22.TabIndex = 21
         Button22.Text = "Button22"
-        Button22.UseVisualStyleBackColor = True
-        Button22.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button22.FlatStyle = FlatStyle.Flat
-        AddHandler Button22.Paint, AddressOf Me.Button_Paint
-
+        Button22.UseVisualStyleBackColor = False
         ' 
         ' Button21
         ' 
+        Button21.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button21.FlatStyle = FlatStyle.Flat
         Button21.Location = New Point(3, 583)
         Button21.Name = "Button21"
         Button21.Size = New Size(157, 23)
         Button21.TabIndex = 20
         Button21.Text = "Button21"
-        Button21.UseVisualStyleBackColor = True
-        Button21.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button21.FlatStyle = FlatStyle.Flat
-        AddHandler Button21.Paint, AddressOf Me.Button_Paint
-
+        Button21.UseVisualStyleBackColor = False
         ' 
         ' Button20
         ' 
+        Button20.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button20.FlatStyle = FlatStyle.Flat
         Button20.Location = New Point(4, 554)
         Button20.Name = "Button20"
         Button20.Size = New Size(157, 23)
         Button20.TabIndex = 19
         Button20.Text = "Button20"
-        Button20.UseVisualStyleBackColor = True
-        Button20.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button20.FlatStyle = FlatStyle.Flat
-        AddHandler Button20.Paint, AddressOf Me.Button_Paint
-
+        Button20.UseVisualStyleBackColor = False
         ' 
         ' Button19
         ' 
+        Button19.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button19.FlatStyle = FlatStyle.Flat
         Button19.Location = New Point(3, 525)
         Button19.Name = "Button19"
         Button19.Size = New Size(157, 23)
         Button19.TabIndex = 18
         Button19.Text = "Button19"
-        Button19.UseVisualStyleBackColor = True
-        Button19.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button19.FlatStyle = FlatStyle.Flat
-        AddHandler Button19.Paint, AddressOf Me.Button_Paint
-
+        Button19.UseVisualStyleBackColor = False
         ' 
         ' Button18
         ' 
+        Button18.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button18.FlatStyle = FlatStyle.Flat
         Button18.Location = New Point(4, 496)
         Button18.Name = "Button18"
         Button18.Size = New Size(157, 23)
         Button18.TabIndex = 17
         Button18.Text = "Button18"
-        Button18.UseVisualStyleBackColor = True
-        Button18.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button18.FlatStyle = FlatStyle.Flat
-        AddHandler Button18.Paint, AddressOf Me.Button_Paint
-
+        Button18.UseVisualStyleBackColor = False
         ' 
         ' Button17
         ' 
+        Button17.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button17.FlatStyle = FlatStyle.Flat
         Button17.Location = New Point(4, 467)
         Button17.Name = "Button17"
         Button17.Size = New Size(157, 23)
         Button17.TabIndex = 16
         Button17.Text = "Button17"
-        Button17.UseVisualStyleBackColor = True
-        Button17.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button17.FlatStyle = FlatStyle.Flat
-        AddHandler Button17.Paint, AddressOf Me.Button_Paint
-
+        Button17.UseVisualStyleBackColor = False
         ' 
         ' Button16
         ' 
+        Button16.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button16.FlatStyle = FlatStyle.Flat
         Button16.Location = New Point(3, 438)
         Button16.Name = "Button16"
         Button16.Size = New Size(157, 23)
         Button16.TabIndex = 15
         Button16.Text = "Button16"
-        Button16.UseVisualStyleBackColor = True
-        Button16.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button16.FlatStyle = FlatStyle.Flat
-        AddHandler Button16.Paint, AddressOf Me.Button_Paint
-
+        Button16.UseVisualStyleBackColor = False
         ' 
         ' Button15
         ' 
+        Button15.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button15.FlatStyle = FlatStyle.Flat
         Button15.Location = New Point(3, 409)
         Button15.Name = "Button15"
         Button15.Size = New Size(157, 23)
         Button15.TabIndex = 14
         Button15.Text = "Button15"
-        Button15.UseVisualStyleBackColor = True
-        Button15.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button15.FlatStyle = FlatStyle.Flat
-        AddHandler Button15.Paint, AddressOf Me.Button_Paint
-
+        Button15.UseVisualStyleBackColor = False
         ' 
         ' Button14
         ' 
+        Button14.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button14.FlatStyle = FlatStyle.Flat
         Button14.Location = New Point(3, 380)
         Button14.Name = "Button14"
         Button14.Size = New Size(157, 23)
         Button14.TabIndex = 13
         Button14.Text = "Button14"
-        Button14.UseVisualStyleBackColor = True
-        Button14.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button14.FlatStyle = FlatStyle.Flat
-        AddHandler Button14.Paint, AddressOf Me.Button_Paint
-
+        Button14.UseVisualStyleBackColor = False
         ' 
         ' Button13
         ' 
+        Button13.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button13.FlatStyle = FlatStyle.Flat
         Button13.Location = New Point(3, 351)
         Button13.Name = "Button13"
         Button13.Size = New Size(157, 23)
         Button13.TabIndex = 12
         Button13.Text = "Button13"
-        Button13.UseVisualStyleBackColor = True
-        Button13.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button13.FlatStyle = FlatStyle.Flat
-        AddHandler Button13.Paint, AddressOf Me.Button_Paint
-
+        Button13.UseVisualStyleBackColor = False
         ' 
         ' Button12
         ' 
+        Button12.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button12.FlatStyle = FlatStyle.Flat
         Button12.Location = New Point(4, 322)
         Button12.Name = "Button12"
         Button12.Size = New Size(157, 23)
         Button12.TabIndex = 11
         Button12.Text = "Button12"
-        Button12.UseVisualStyleBackColor = True
-        Button12.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button12.FlatStyle = FlatStyle.Flat
-        AddHandler Button12.Paint, AddressOf Me.Button_Paint
-
+        Button12.UseVisualStyleBackColor = False
         ' 
         ' Button11
         ' 
+        Button11.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button11.FlatStyle = FlatStyle.Flat
         Button11.Location = New Point(3, 293)
         Button11.Name = "Button11"
         Button11.Size = New Size(157, 23)
         Button11.TabIndex = 10
         Button11.Text = "Button11"
-        Button11.UseVisualStyleBackColor = True
-        Button11.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button11.FlatStyle = FlatStyle.Flat
-        AddHandler Button11.Paint, AddressOf Me.Button_Paint
-
+        Button11.UseVisualStyleBackColor = False
         ' 
         ' Button10
         ' 
+        Button10.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button10.FlatStyle = FlatStyle.Flat
         Button10.Location = New Point(3, 264)
         Button10.Name = "Button10"
         Button10.Size = New Size(157, 23)
         Button10.TabIndex = 9
         Button10.Text = "Button10"
-        Button10.UseVisualStyleBackColor = True
-        Button10.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button10.FlatStyle = FlatStyle.Flat
-        AddHandler Button10.Paint, AddressOf Me.Button_Paint
-
+        Button10.UseVisualStyleBackColor = False
         ' 
         ' Button9
         ' 
+        Button9.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button9.FlatStyle = FlatStyle.Flat
         Button9.Location = New Point(3, 235)
         Button9.Name = "Button9"
         Button9.Size = New Size(157, 23)
         Button9.TabIndex = 8
         Button9.Text = "Button9"
-        Button9.UseVisualStyleBackColor = True
-        Button9.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button9.FlatStyle = FlatStyle.Flat
-        AddHandler Button9.Paint, AddressOf Me.Button_Paint
-
+        Button9.UseVisualStyleBackColor = False
         ' 
         ' Button8
         ' 
+        Button8.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button8.FlatStyle = FlatStyle.Flat
         Button8.Location = New Point(3, 206)
         Button8.Name = "Button8"
         Button8.Size = New Size(157, 23)
         Button8.TabIndex = 7
         Button8.Text = "Button8"
-        Button8.UseVisualStyleBackColor = True
-        Button8.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button8.FlatStyle = FlatStyle.Flat
-        AddHandler Button8.Paint, AddressOf Me.Button_Paint
-
+        Button8.UseVisualStyleBackColor = False
         ' 
         ' Button7
         ' 
+        Button7.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button7.FlatStyle = FlatStyle.Flat
         Button7.Location = New Point(3, 177)
         Button7.Name = "Button7"
         Button7.Size = New Size(157, 23)
         Button7.TabIndex = 6
         Button7.Text = "Button7"
-        Button7.UseVisualStyleBackColor = True
-        Button7.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button7.FlatStyle = FlatStyle.Flat
-        AddHandler Button7.Paint, AddressOf Me.Button_Paint
-
+        Button7.UseVisualStyleBackColor = False
         ' 
         ' Button6
         ' 
+        Button6.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button6.FlatStyle = FlatStyle.Flat
         Button6.Location = New Point(3, 148)
         Button6.Name = "Button6"
         Button6.Size = New Size(157, 23)
         Button6.TabIndex = 5
         Button6.Text = "Button6"
-        Button6.UseVisualStyleBackColor = True
-        Button6.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button6.FlatStyle = FlatStyle.Flat
-        AddHandler Button6.Paint, AddressOf Me.Button_Paint
-
+        Button6.UseVisualStyleBackColor = False
         ' 
         ' Button5
         ' 
+        Button5.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button5.FlatStyle = FlatStyle.Flat
         Button5.Location = New Point(3, 119)
         Button5.Name = "Button5"
         Button5.Size = New Size(157, 23)
         Button5.TabIndex = 4
         Button5.Text = "Button5"
-        Button5.UseVisualStyleBackColor = True
-        Button5.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button5.FlatStyle = FlatStyle.Flat
-        AddHandler Button5.Paint, AddressOf Me.Button_Paint
-
+        Button5.UseVisualStyleBackColor = False
         ' 
         ' Button4
         ' 
+        Button4.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button4.FlatStyle = FlatStyle.Flat
         Button4.Location = New Point(3, 90)
         Button4.Name = "Button4"
         Button4.Size = New Size(157, 23)
         Button4.TabIndex = 3
         Button4.Text = "Button4"
-        Button4.UseVisualStyleBackColor = True
-        Button4.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button4.FlatStyle = FlatStyle.Flat
-        AddHandler Button4.Paint, AddressOf Me.Button_Paint
-
+        Button4.UseVisualStyleBackColor = False
         ' 
         ' Button3
         ' 
+        Button3.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button3.FlatStyle = FlatStyle.Flat
         Button3.Location = New Point(3, 61)
         Button3.Name = "Button3"
         Button3.Size = New Size(157, 23)
         Button3.TabIndex = 2
         Button3.Text = "Button3"
-        Button3.UseVisualStyleBackColor = True
-        Button3.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button3.FlatStyle = FlatStyle.Flat
-        AddHandler Button3.Paint, AddressOf Me.Button_Paint
-
+        Button3.UseVisualStyleBackColor = False
         ' 
         ' Button2
         ' 
+        Button2.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button2.FlatStyle = FlatStyle.Flat
         Button2.Location = New Point(3, 32)
         Button2.Name = "Button2"
         Button2.Size = New Size(157, 23)
         Button2.TabIndex = 1
         Button2.Text = "Macro Injection Engine"
-        Button2.UseVisualStyleBackColor = True
-        Button2.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button2.FlatStyle = FlatStyle.Flat
-        AddHandler Button2.Paint, AddressOf Me.Button_Paint
-
+        Button2.UseVisualStyleBackColor = False
         ' 
         ' Button1
         ' 
+        Button1.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
+        Button1.FlatStyle = FlatStyle.Flat
         Button1.Location = New Point(4, 3)
         Button1.Name = "Button1"
         Button1.Size = New Size(157, 23)
         Button1.TabIndex = 0
         Button1.Text = "Document Understanding"
-        Button1.UseVisualStyleBackColor = True
-        Button1.BackColor = Color.FromArgb(CByte(19), CByte(252), CByte(117))
-        Button1.FlatStyle = FlatStyle.Flat
-        AddHandler Button1.Paint, AddressOf Me.Button_Paint
-
+        Button1.UseVisualStyleBackColor = False
         ' 
         ' SideBar
         ' 

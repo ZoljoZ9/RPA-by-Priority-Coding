@@ -34,6 +34,9 @@ Public Class SideBar
         ElseIf button.Name = "Button2" Then
             Dim macInjectionForm As New MacInjection()
             macInjectionForm.Show()
+        ElseIf button.Name = "Button3" Then
+            Dim macInjectionForm As New MacInjection()
+            CRMcopilotForm.Show()
         Else
             MessageBox.Show("New features coming soon")
         End If
@@ -53,4 +56,10 @@ Public Class SideBar
         End If
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If TypeOf ParentForm Is MainScreen Then
+            Dim mainScreenForm As MainScreen = DirectCast(ParentForm, MainScreen)
+            mainScreenForm.ShowCRMcopilot()
+        End If
+    End Sub
 End Class

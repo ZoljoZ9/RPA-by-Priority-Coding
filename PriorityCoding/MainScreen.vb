@@ -56,6 +56,7 @@ Public Class MainScreen
     Public Sub ShowDocUnderstanding()
         Panel1.Visible = False
         DocUnderstanding1.Visible = True
+        CRMcopilot1.visable = False
         MacInjection1.Visible = False
         DocUnderstanding1.BringToFront()
     End Sub
@@ -63,9 +64,19 @@ Public Class MainScreen
     Public Sub ShowMacInjection()
         Panel1.Visible = False
         DocUnderstanding1.Visible = False
+        CRMcopilot1.visable = False
         MacInjection1.Visible = True
         MacInjection1.BringToFront()
     End Sub
+
+    Public Sub ShowCRMcopilot()
+        Panel1.Visible = False
+        DocUnderstanding1.Visible = False
+        MacInjection1.Visible = False
+        CRMcopilot1.Visible = True
+        CRMcopilot1.BringToFront()
+    End Sub
+
 
     ' Inside the MainScreen class
     Private WithEvents docunderstanding As New DocUnderstanding()
@@ -83,6 +94,7 @@ Public Class MainScreen
     Private Sub SideBar2_Load(sender As Object, e As EventArgs)
     End Sub
 
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
 
-
+    End Sub
 End Class

@@ -12,20 +12,28 @@ Partial Class MainScreen
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.txtConsoleOutput = New System.Windows.Forms.TextBox()
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainScreen))
+        txtConsoleOutput = New TextBox()
         BindingSource1 = New BindingSource(components)
         Panel1 = New Panel()
         PictureBox1 = New PictureBox()
         Label1 = New Label()
         MacInjection1 = New MacInjection()
         DocUnderstanding1 = New DocUnderstanding()
+        CRMcopilot1 = New CRMcopilot()
         SideBar1 = New SideBar()
         CType(BindingSource1, ComponentModel.ISupportInitialize).BeginInit()
         Panel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
+        ' 
+        ' txtConsoleOutput
+        ' 
+        txtConsoleOutput.Location = New Point(0, 0)
+        txtConsoleOutput.Name = "txtConsoleOutput"
+        txtConsoleOutput.Size = New Size(100, 23)
+        txtConsoleOutput.TabIndex = 0
         ' 
         ' Panel1
         ' 
@@ -50,7 +58,7 @@ Partial Class MainScreen
         ' Label1
         ' 
         Label1.AutoSize = True
-        Label1.Font = New Font("Arial", 16.0F, FontStyle.Bold)
+        Label1.Font = New Font("Arial", 16F, FontStyle.Bold)
         Label1.Location = New Point(161, 155)
         Label1.Name = "Label1"
         Label1.Size = New Size(211, 26)
@@ -71,6 +79,12 @@ Partial Class MainScreen
         DocUnderstanding1.Name = "DocUnderstanding1"
         DocUnderstanding1.Size = New Size(735, 460)
         DocUnderstanding1.TabIndex = 2
+
+        CRMcopilot1.BackColor = Color.FromArgb(CByte(51), CByte(51), CByte(51))
+        CRMcopilot1.Location = New Point(191, 0)
+        CRMcopilot1.Name = "CRMcopilot1"
+        CRMcopilot1.Size = New Size(648, 460)
+        CRMcopilot1.TabIndex = 3
         ' 
         ' SideBar1
         ' 
@@ -84,7 +98,7 @@ Partial Class MainScreen
         ' 
         ' MainScreen
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(835, 449)
         Controls.Add(SideBar1)
@@ -113,4 +127,6 @@ Partial Class MainScreen
     Friend WithEvents DocUnderstanding1 As DocUnderstanding
     Friend WithEvents MacInjection1 As MacInjection
     Friend WithEvents SideBar1 As SideBar
+    Friend WithEvents CRMcopilot1 As CRMcopilot
+
 End Class
