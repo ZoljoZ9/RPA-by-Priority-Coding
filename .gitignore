@@ -21,6 +21,20 @@
 *.png
 *.pb
 
+# Ignore Android emulator files
+**/.android/
+**/*.avd/
+**/*.img
+**/*.bin
+**/*.pb
+**/*.qcow2
+**/*.ini
+**/*.key
+**/tmpAdbCmds/
+**/snapshots/
+**/modem_simulator/
+
+
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
